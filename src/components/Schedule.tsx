@@ -10,13 +10,13 @@ type Row = {
 };
 
 const scheduleRows: Row[] = [
-  { time: '10:00', days: [{ name: 'ТАБАТА', trainer: 'Дара' }, null, { name: 'ТАБАТА', trainer: 'Дара' }, null, null, null] },
-  { time: '11:00', days: [null, null, null, null, { name: 'СТРЕТЧИНГ', trainer: 'Ольга' }, null] },
-  { time: '12:00', days: [{ name: 'ЙОГА', trainer: 'Марина' }, null, null, null, null, null] },
-  { time: '17:00', days: [{ name: 'ДЖАМПІНГ', trainer: 'Ольга' }, null, null, null, null, null] },
-  { time: '17:30', days: [{ name: 'ФЛАЙ ЙОГА', trainer: 'Жанна' }, null, null, { name: 'ЙОГА', trainer: 'Марина' }, { name: 'ФЛАЙ ЙОГА', trainer: 'Жанна' }, null] },
-  { time: '18:00', days: [null, { name: 'HIIT', trainer: 'Ольга' }, null, { name: 'HIIT', trainer: 'Ольга' }, null, null] },
-  { time: '19:00', days: [{ name: 'TRX+ТАБАТА', trainer: 'Дара' }, null, { name: 'СТРЕТЧИНГ', trainer: 'Ольга' }, { name: 'TRX+ТАБАТА', trainer: 'Дара' }, { name: 'СТРЕТЧИНГ', trainer: 'Ольга' }, null] },
+  { time: '10:00', days: [{ name: 'ТАБАТА', trainer: 'Дара' }, null, null, { name: 'ТАБАТА', trainer: 'Дара' }, null, null] },
+  { time: '11:00', days: [null, null, null, null, null, { name: 'СТРЕТЧИНГ', trainer: 'Ольга' }] },
+  { time: '12:00', days: [null, null, null, null, null, { name: 'ЙОГА', trainer: 'Марина' }] },
+  { time: '17:00', days: [null, { name: 'ДЖАМПІНГ', trainer: 'Ольга' }, null, null, null, null] },
+  { time: '17:30', days: [{ name: 'ФЛАЙ ЙОГА', trainer: 'Жанна' }, null, { name: 'ЙОГА', trainer: 'Марина' }, { name: 'ФЛАЙ ЙОГА', trainer: 'Жанна' }, null, null] },
+  { time: '18:00', days: [null, { name: 'HIIT', trainer: 'Ольга' }, null, null, { name: 'HIIT', trainer: 'Ольга' }, null] },
+  { time: '19:00', days: [{ name: 'ТАБАТА+TRX', trainer: 'Дара' }, { name: 'СТРЕТЧИНГ', trainer: 'Ольга' }, { name: 'ТАБАТА+TRX', trainer: 'Дара' }, null, { name: 'СТРЕТЧИНГ', trainer: 'Ольга' }, null] },
 ];
 
 const dayLabels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];

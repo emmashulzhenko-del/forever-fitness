@@ -20,7 +20,7 @@ const trainers: Trainer[] = [
   { name: 'Ольга Нагірна',      specialty: 'HIIT · Джампінг · Стретчинг',      exp: 'Досвід: 8 років',  photo: '/trainers/olha-nahirna.webp' },
   {
     name: 'Жанна Потапова',
-    specialty: 'Флай Йога · Хатха Йога · Йога-терапія',
+    specialty: 'ФЛАЙ ЙОГА · ЙОГА-ТЕРАПІЯ',
     exp: 'Викладає з 2007 року',
     photo: '/trainers/zhanna-potapova.webp',
     bio: 'Засновниця фітнес-клубу Forever, дипломована випускниця ЛДУФК з відзнакою, сертифікована інструкторка з йоги, аюрведист і прихильниця холістичного підходу до оздоровлення. Спеціалізується на Хатха-йозі, Флай-йозі (в гамаках), йога-терапії та оздоровчому пілатесі. Спікерка фестивалів Yoga Expo та Veda Life, засновниця всеукраїнського проєкту Йогатабір «Прана». Для Жанни йога — це шлях до фізичного здоров\'я, внутрішньої гармонії та усвідомленого життя. «Живи тут і зараз!»',
@@ -29,7 +29,7 @@ const trainers: Trainer[] = [
       { label: 'ayurvedaahimsa.com', href: 'https://www.ayurvedaahimsa.com' },
     ],
   },
-  { name: 'Марина Александрова', specialty: 'Йога · Пранаяма',                 exp: 'Досвід: 10 років', photo: '/trainers/maryna-aleksandrova.webp' },
+  { name: 'Марина Александрова', specialty: 'ХАТХА ЙОГА · ПРАНАЯМА',           exp: 'Досвід: 10 років', photo: '/trainers/maryna-aleksandrova.webp' },
   { name: 'Наталя Пустовіт',    specialty: 'Персональний тренінг',             exp: 'Досвід: 6 років',  photo: '/trainers/natalia-pustovit.webp' },
   { name: 'Діана Непомяща',     specialty: 'Пілатес · Фітбол',                 exp: 'Досвід: 5 років',  photo: '/trainers/diana-nepomyashcha.webp' },
 ];

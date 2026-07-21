@@ -51,7 +51,7 @@ export default function Services() {
         ОБЕРИ ПОСЛУГУ
       </h2>
       <p className="font-body text-center text-zinc-500 dark:text-zinc-400 mb-12 text-lg">
-        Чотири напрямки — один клуб у серці Львова
+        Твій фітнес-простір в серці Львова. Тут лише те, що веде до результату.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">

@@ -16,16 +16,16 @@ const programs = [
     desc: 'Все тіло за 50 хвилин — сила, баланс, витривалість.' },
   { title: 'HIIT', photo: '/programs/hiit.webp',
     desc: 'Максимальне спалення жиру. Метаболізм працює ще 24 години.' },
-  { title: 'STRETCHING + МОБІЛІТІ', photo: '/programs/stretching.webp',
-    desc: 'Гнучкість, легкість рухів, профілактика травм.' },
+  { title: 'STRETCHING + МОБІЛІТІ', photo: '/programs/stretching-mobility.webp',
+    desc: 'Рух без обмежень. Мʼяка розтяжка усіх мʼязових груп. Робота з фасціями.' },
   { title: 'ФЛАЙ ЙОГА', photo: '/programs/fly-yoga.webp',
     desc: 'Декомпресійна Йога терапія. Коректна практика в гамаках.' },
   { title: 'ХАТХА ЙОГА', photo: '/programs/hatha-yoga.webp',
     desc: 'Баланс тіла і нервової системи через асани та дихання.' },
   { title: 'FITMAMA', photo: '/programs/fitmama.webp',
-    desc: 'Курс персональних тренувань коректного відновлення після пологів.' },
+    desc: 'Персональні тренування з відновлення і реабілітації.' },
   { title: 'КІНЕЗІОТЕРАПІЯ', photo: '/programs/kinesio.webp',
-    desc: 'Персональне тренування реабілітаційного напрямку для корекції порушень рухового апарату.' },
+    desc: 'Персональні тренування з відновлення і реабілітації.' },
 ]
 
 const container: Variants = {
