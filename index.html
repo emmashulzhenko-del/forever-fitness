@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Фітнес Клуб Forever Львів — Тренажерний зал, Фітнес, Йога | вул. Зелена 20</title>
+    <meta name="description" content="Фітнес клуб Forever у центрі Львова — тренажерний зал, групові заняття, йога, масаж. Перше тренування зі знижкою 50%. Запис: +38 067 149 69 30.">
+    <meta name="keywords" content="фітнес клуб Львів, тренажерний зал Львів, йога Львів, фітнес Зелена 20">
+    <meta property="og:title" content="Фітнес Клуб Forever Львів">
+    <meta property="og:description" content="Перше тренування зі знижкою 50%. Тренажерний зал, фітнес, йога у центрі Львова.">
+    <meta property="og:type" content="website">
+    <meta name="geo.region" content="UA-46">
+    <meta name="geo.placename" content="Lviv">
+    <link rel="canonical" href="https://forever-fitness-lviv.netlify.app/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsActivityLocation",
+      "name": "Фітнес Клуб Forever",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "вул. Зелена, 20",
+        "addressLocality": "Львів",
+        "addressCountry": "UA"
+      },
+      "telephone": "+380671496930",
+      "url": "https://forever-fitness-lviv.netlify.app/",
+      "openingHours": "Mo-Sa 08:00-21:00",
+      "priceRange": "₴₴"
+    }
+    </script>
+    <script>
+      // Prevent dark mode flash — read from localStorage before React mounts
+      (function() {
+        try {
+          var dark = localStorage.getItem('theme') === 'dark';
+          if (dark) document.documentElement.classList.add('dark');
+        } catch(e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- Netlify Forms — required hidden declarations for build detection -->
+    <form name="trainer-booking" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="tel" name="phone" />
+      <input type="text" name="day" />
+      <input type="text" name="time" />
+      <input type="text" name="trainer" />
+    </form>
+    <form name="class-booking" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="tel" name="phone" />
+      <input type="text" name="class" />
+      <input type="date" name="date" />
+    </form>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

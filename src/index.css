@@ -1,0 +1,87 @@
+@font-face {
+  font-family: 'Google Sans';
+  src: url('/fonts/GoogleSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Google Sans';
+  src: url('/fonts/GoogleSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Google Sans';
+  src: url('/fonts/GoogleSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Google Sans';
+  src: url('/fonts/GoogleSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { border-radius: 0 !important; box-sizing: border-box; }
+.rounded-full, .allow-round { border-radius: 9999px !important; }
+
+html { scroll-behavior: smooth; }
+
+:root { --schedule-fade-bg: #f9fafb; }
+.dark { --schedule-fade-bg: #18181b; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.font-display {
+  font-family: 'Google Sans', sans-serif !important;
+  letter-spacing: -0.01em;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif !important;
+}
+/* Google Sans weight guide: 700=headlines, 600=section titles / buttons, 500=nav links, 400=labels */
+
+@media (max-width: 640px) {
+  .hero-headline-line {
+    white-space: normal !important;
+  }
+  h1 { overflow-wrap: break-word; }
+}
+
+/* iOS Safari form input fixes */
+input[type="date"],
+input[type="time"],
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+  max-width: 100%;
+}
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+/* Prevent horizontal overflow on mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
