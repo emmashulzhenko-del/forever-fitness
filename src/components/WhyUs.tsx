@@ -178,7 +178,7 @@ export default function WhyUs() {
               )}
 
               {/* Text content */}
-              <div className={`p-6 flex flex-col flex-1 ${!adv.photo ? 'justify-center' : ''}`}>
+              <div className={`p-6 flex flex-col flex-1 ${!adv.photo ? 'justify-center' : 'pb-10'}`}>
                 {/* Icon badge */}
                 <div className={`w-10 h-10 rounded-full ${iconBadgeBg} flex items-center justify-center mb-3`}>
                   <Icon className={`w-5 h-5 ${iconColor}`} />

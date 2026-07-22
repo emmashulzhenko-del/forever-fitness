@@ -66,7 +66,7 @@ const trainers: Trainer[] = [
   },
   {
     name: 'Марія Тартушкіна',
-    specialty: 'ФЛАЙ ЙОГА · СТРЕТЧИНГ',
+    specialty: 'ТРЕНАЖЕРНИЙ ЗАЛ · БОЙОВІ МИСТЕЦТВА',
     exp: 'Досвід: 6 років',
     photo: '/trainers/mariia-tartushkina.webp',
     bio: 'Марія Тартушкіна — персональна тренерка тренажерного залу, спеціалістка з бойових мистецтв, фітнес-інструкторка та дієтолог. Професійні навички тренера підтверджено 8 сертифікатами Expert I Smart Fitness.\n\nДопомагає клієнтам зміцнити здоров\'я, скоригувати фігуру, покращити поставу, розвинути силу й витривалість, отримати навички самозахисту, а також відновитися після фізичних навантажень.\n\nКожна програма тренувань розробляється індивідуально, щоб ви безпечно та ефективно досягли своїх цілей і отримували задоволення від процесу.',
@@ -151,9 +151,11 @@ export default function Trainers() {
 
               {/* Body */}
               <div className="p-5 flex-1 flex flex-col">
-                <p className="font-display text-xl text-zinc-900 dark:text-white min-h-[3.5rem]">{trainer.name}</p>
-                <p className="font-body font-light text-[10px] text-accent uppercase tracking-wide mt-1 min-h-[2rem]">{trainer.specialty}</p>
-                <p className="font-body font-light text-xs text-zinc-500 dark:text-zinc-400 mt-1">{trainer.exp}</p>
+                <div className="space-y-1">
+                  <p className="font-display text-xl text-zinc-900 dark:text-white leading-snug">{trainer.name}</p>
+                  <p className="font-body font-light text-[10px] text-accent uppercase tracking-wide">{trainer.specialty}</p>
+                  <p className="font-body font-light text-xs text-zinc-500 dark:text-zinc-400">{trainer.exp}</p>
+                </div>
 
                 <button
                   onClick={() => setBookingTrainer(trainer)}
