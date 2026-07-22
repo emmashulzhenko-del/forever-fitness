@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { Camera, Play, Send } from 'lucide-react';
+import { Maximize2 } from 'lucide-react';
 import TrainerBookingModal from './TrainerBookingModal';
+import TrainerBioModal from './TrainerBioModal';
 
 type Trainer = {
   name: string;
@@ -10,28 +11,76 @@ type Trainer = {
   exp: string;
   photo: string;
   bio?: string;
-  external?: { label: string; href: string }[];
+  bioShort?: string;
 };
 
 const trainers: Trainer[] = [
-  { name: 'Дара Вовняченко',    specialty: 'Табата · TRX · Функціональний',   exp: 'Досвід: 7 років',  photo: '/trainers/dara-vovniachenko.webp' },
-  { name: 'Марія Тартушкіна',   specialty: 'Флай Йога · Стретчинг',            exp: 'Досвід: 6 років',  photo: '/trainers/mariia-tartushkina.webp' },
-  { name: 'Оксана Сидун',       specialty: 'Стретчинг · Пілатес',              exp: 'Досвід: 5 років',  photo: '/trainers/oksana-sydun.webp' },
-  { name: 'Ольга Нагірна',      specialty: 'HIIT · Джампінг · Стретчинг',      exp: 'Досвід: 8 років',  photo: '/trainers/olha-nahirna.webp' },
   {
+    name: 'Наталя Пустовит',
+    specialty: 'ПЕРСОНАЛЬНИЙ ТРЕНІНГ',
+    exp: 'Досвід: 25 років',
+    photo: '/trainers/natalia-pustovit.webp',
+    bio: 'Персональна тренерка з 25-річним досвідом, майстер спорту з плавання. Допомагає клієнтам будь-якого віку досягати реальних результатів: схуднення, набору м\'язової маси, корекції фігури та покращення постави. Працює за індивідуальними програмами, поєднуючи ефективні тренування з рекомендаціями щодо здорового харчування. Має великий досвід у фітнесі, бодібілдингу та оздоровчому тренінгу. Якщо ви цінуєте професіоналізм, дисципліну та безпечний шлях до своєї найкращої форми — Наталя стане вашим надійним тренером.',
+    bioShort: 'Персональна тренерка з 25-річним досвідом, майстер спорту з плавання. Допомагає клієнтам будь-якого віку досягати реальних результатів: схуднення, набору м\'язової маси, корекції фігури та покращення постави.',
+  },
+  {
+    name: 'Оля Нагірна',
+    specialty: 'HIIT · ДЖАМПІНГ · СТРЕТЧИНГ',
+    exp: 'Досвід: 18 років',
+    photo: '/trainers/olha-nahirna.webp',
+    bio: 'Тренерка з 18-річним досвідом, випускниця Львівського державного університету фізичної культури та майстер спорту зі спортивної гімнастики. Постійно вдосконалює свої знання, щоб кожне тренування було максимально ефективним і безпечним. Спеціалізується на персональних і групових тренуваннях: HIIT, Jumping Fitness, Stretching, силова підготовка, СФП, мобіліті та тренування в тренажерному залі. Їй довіряють як початківці, так і професійні спортсмени. Індивідуальний підхід, контроль техніки та програми, адаптовані під ваші цілі, допоможуть швидко й безпечно досягти бажаного результату.',
+    bioShort: 'Тренерка з 18-річним досвідом, випускниця Львівського державного університету фізичної культури та майстер спорту зі спортивної гімнастики. Постійно вдосконалює свої знання, щоб кожне тренування було максимально ефективним і безпечним.',
+  },
+  {
+    name: 'Діана',
+    specialty: 'ТРЕНАЖЕРНИЙ ЗАЛ · ПЕРСОНАЛЬНИЙ',
+    exp: 'Досвід: 5 років',
+    photo: '/trainers/diana-nepomyashcha.webp',
+    bio: 'Персональна тренерка тренажерного залу, яка допомагає дорослим і підліткам досягати своїх фітнес-цілей. Має практичний досвід, постійних клієнтів та індивідуальний підхід до кожного. З дитинства займається спортом: спортивною й художньою гімнастикою, акробатикою, стрільбою з лука та професійним волейболом. Постійно вдосконалює свої знання та здобуває медичну освіту, щоб тренування були максимально ефективними й безпечними. На персональних заняттях Діана складає індивідуальні програми, навчає правильній техніці виконання вправ і допомагає стати сильнішими, витривалішими та впевненішими у собі.',
+    bioShort: 'Персональна тренерка тренажерного залу, яка допомагає дорослим і підліткам досягати своїх фітнес-цілей. Має практичний досвід, постійних клієнтів та індивідуальний підхід до кожного.',
+  },
+  {
+    name: 'Оксана Сидун',
+    specialty: 'СТРЕТЧИНГ · ПІЛАТЕС',
+    exp: 'Досвід: 5 років',
+    photo: '/trainers/oksana-sydun.webp',
+    bio: 'Персональна тренерка, яка допомагає безпечно й ефективно досягати бажаної форми, покращувати здоров\'я та самопочуття. Має спортивний досвід у футболі та легкій атлетиці, а також багато вдячних клієнтів із реальними результатами. Спеціалізується на схудненні, корекції фігури, наборі м\'язової маси, FitMama — післяпологовому відновленні, реабілітації після травм, операцій. Для кожного клієнта розробляє індивідуальну програму тренувань і надає рекомендації щодо харчування. Кожне заняття адаптоване до ваших можливостей, стану здоров\'я та цілей, щоб шлях до результату був комфортним, безпечним і максимально ефективним.',
+    bioShort: 'Персональна тренерка, яка допомагає безпечно й ефективно досягати бажаної форми, покращувати здоров\'я та самопочуття. Має спортивний досвід у футболі та легкій атлетиці, а також багато вдячних клієнтів із реальними результатами.',
+  },
+  {
+    name: 'Дарія Вовчаненко',
+    specialty: 'ТАБАТА · TRX · ФУНКЦІОНАЛЬНИЙ',
+    exp: 'Досвід: 3+ роки',
+    photo: '/trainers/dara-vovniachenko.webp',
+    bio: 'Сертифікована тренерка з фітнесу, яка проводить TRX, TABATA та персональні тренування. Уже понад 3 роки допомагає клієнтам ставати сильнішими, витривалішими та впевненішими у собі. Велике значення приділяє правильній техніці виконання вправ, індивідуальному підбору навантаження та підтримці кожного клієнта. Її тренування поєднують ефективність, різноманітність і позитивну атмосферу. Дара постійно вдосконалює свої професійні навички та допомагає зробити спорт не лише результативним, а й справді захопливим.',
+    bioShort: 'Сертифікована тренерка з фітнесу, яка проводить TRX, TABATA та персональні тренування. Уже понад 3 роки допомагає клієнтам ставати сильнішими, витривалішими та впевненішими у собі.',
+  },
+  {
+    name: 'Марина Алєксандрова',
+    specialty: 'ЙОГА · VINYASA FLOW',
+    exp: 'Досвід: з 2011 року',
+    photo: '/trainers/maryna-aleksandrova.webp',
+    bio: 'Інструкторка з йоги з досвідом викладання з 2011 року. Спеціалізується на Vinyasa Flow Yoga — динамічній практиці, яка розвиває силу, гнучкість, витривалість і внутрішню гармонію. Має медичну освіту та практичний досвід роботи у сфері охорони здоров\'я, що дозволяє проводити заняття з максимальною увагою до анатомії, безпеки та індивідуальних особливостей кожного учасника. Марина працює з людьми різного віку й рівня підготовки, допомагаючи через йогу покращити фізичне самопочуття, знизити рівень стресу та знайти баланс між тілом і розумом.',
+    bioShort: 'Інструкторка з йоги з досвідом викладання з 2011 року. Спеціалізується на Vinyasa Flow Yoga — динамічній практиці, яка розвиває силу, гнучкість, витривалість і внутрішню гармонію.',
+  },
+  {
+    name: 'Марія Тартушкіна',
+    specialty: 'ФЛАЙ ЙОГА · СТРЕТЧИНГ',
+    exp: 'Досвід: 6 років',
+    photo: '/trainers/mariia-tartushkina.webp',
+    bio: 'Персональна тренерка тренажерного залу, спеціалістка з бойових мистецтв, фітнес-інструкторка та дієтолог. Професійні навички тренера підтверджено 8 сертифікатами Expert I Smart Fitness. Допомагає клієнтам зміцнити здоров\'я, скоригувати фігуру, покращити поставу, розвинути силу й витривалість, отримати навички самозахисту, а також відновитися після фізичних навантажень.',
+    bioShort: 'Персональна тренерка тренажерного залу, спеціалістка з бойових мистецтв, фітнес-інструкторка та дієтолог. Професійні навички тренера підтверджено 8 сертифікатами Expert I Smart Fitness.',
+  },
+  {
+    // ⚑ FLAG: placed last by default — client list did not specify her position
     name: 'Жанна Потапова',
     specialty: 'ФЛАЙ ЙОГА · ЙОГА-ТЕРАПІЯ',
-    exp: 'Викладає з 2007 року',
+    exp: 'Досвід: 20 років',
     photo: '/trainers/zhanna-potapova.webp',
-    bio: 'Засновниця фітнес-клубу Forever, дипломована випускниця ЛДУФК з відзнакою, сертифікована інструкторка з йоги, аюрведист і прихильниця холістичного підходу до оздоровлення. Спеціалізується на Хатха-йозі, Флай-йозі (в гамаках), йога-терапії та оздоровчому пілатесі. Спікерка фестивалів Yoga Expo та Veda Life, засновниця всеукраїнського проєкту Йогатабір «Прана». Для Жанни йога — це шлях до фізичного здоров\'я, внутрішньої гармонії та усвідомленого життя. «Живи тут і зараз!»',
-    external: [
-      { label: 'yogatabir.com.ua', href: 'https://www.yogatabir.com.ua' },
-      { label: 'ayurvedaahimsa.com', href: 'https://www.ayurvedaahimsa.com' },
-    ],
+    // No paragraph bio provided by client — modal shows specialty + exp only
+    bio: undefined,
+    bioShort: undefined,
   },
-  { name: 'Марина Александрова', specialty: 'ХАТХА ЙОГА · ПРАНАЯМА',           exp: 'Досвід: 10 років', photo: '/trainers/maryna-aleksandrova.webp' },
-  { name: 'Наталя Пустовіт',    specialty: 'Персональний тренінг',             exp: 'Досвід: 6 років',  photo: '/trainers/natalia-pustovit.webp' },
-  { name: 'Діана Непомяща',     specialty: 'Пілатес · Фітбол',                 exp: 'Досвід: 5 років',  photo: '/trainers/diana-nepomyashcha.webp' },
 ];
 
 const container: Variants = {
@@ -45,7 +94,7 @@ const item: Variants = {
 
 export default function Trainers() {
   const [bookingTrainer, setBookingTrainer] = useState<Trainer | null>(null);
-  const [expandedBio, setExpandedBio] = useState<string | null>(null);
+  const [bioTrainer, setBioTrainer] = useState<Trainer | null>(null);
 
   return (
     <section id="trainers" className="py-20 bg-white dark:bg-zinc-950">
@@ -68,92 +117,64 @@ export default function Trainers() {
           viewport={{ once: true, margin: '-80px' }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          <AnimatePresence>
-            {trainers.map(trainer => {
-              const isBioOpen = expandedBio === trainer.name;
-              return (
-                <motion.div
-                  key={trainer.name}
-                  variants={item}
-                  layout
-                  className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden group hover:-translate-y-1 transition-transform duration-150"
-                  style={{ borderTop: '3px solid transparent' }}
-                  onMouseEnter={e => (e.currentTarget.style.borderTopColor = '#E8279A')}
-                  onMouseLeave={e => (e.currentTarget.style.borderTopColor = 'transparent')}
+          {trainers.map(trainer => (
+            <motion.div
+              key={trainer.name}
+              variants={item}
+              className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden group hover:-translate-y-1 transition-transform duration-150"
+              style={{ borderTop: '3px solid transparent' }}
+              onMouseEnter={e => (e.currentTarget.style.borderTopColor = '#E8279A')}
+              onMouseLeave={e => (e.currentTarget.style.borderTopColor = 'transparent')}
+            >
+              {/* Clickable photo */}
+              <div
+                className="relative cursor-pointer overflow-hidden"
+                onClick={() => setBioTrainer(trainer)}
+              >
+                <img
+                  src={trainer.photo}
+                  alt={`${trainer.name} — тренер фітнес-клубу Forever`}
+                  className="w-full aspect-[3/4] object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
+                  loading="lazy"
+                  decoding="async"
+                />
+                {/* Hover hint badge */}
+                <div className="absolute top-3 right-3 bg-black/60 text-white text-[10px] px-2 py-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <Maximize2 size={10} />
+                  детальніше
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="p-5">
+                <p className="font-display text-xl text-zinc-900 dark:text-white">{trainer.name}</p>
+                <p className="font-body font-light text-xs text-accent uppercase tracking-widest mt-1">{trainer.specialty}</p>
+                <p className="font-body font-light text-xs text-zinc-500 dark:text-zinc-400 mt-1">{trainer.exp}</p>
+
+                <button
+                  onClick={() => setBookingTrainer(trainer)}
+                  className="w-full font-display font-semibold text-sm bg-accent text-white py-3 mt-4 hover:bg-pink-700 transition"
                 >
-                  <div
-                    className={trainer.bio ? 'cursor-pointer' : ''}
-                    onClick={() => trainer.bio && setExpandedBio(isBioOpen ? null : trainer.name)}
-                  >
-                    <img
-                      src={trainer.photo}
-                      alt={`${trainer.name} — тренер фітнес-клубу Forever`}
-                      className="w-full aspect-[3/4] object-cover object-top"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  {/* Body */}
-                  <div className="p-5">
-                    <p className="font-display text-xl text-zinc-900 dark:text-white">{trainer.name}</p>
-                    <p className="font-body font-light text-xs text-accent uppercase tracking-widest mt-1">{trainer.specialty}</p>
-                    <p className="font-body font-light text-xs text-zinc-500 dark:text-zinc-400 mt-1">{trainer.exp}</p>
-                    {trainer.bio && (
-                      <p className="font-body text-[11px] text-zinc-400 mt-1">натисни на фото</p>
-                    )}
-                    <div className="flex gap-3 mt-3">
-                      <Camera size={16} className="text-zinc-400 hover:text-accent cursor-pointer transition-colors" />
-                      <Play size={16} className="text-zinc-400 hover:text-accent cursor-pointer transition-colors" />
-                      <Send size={16} className="text-zinc-400 hover:text-accent cursor-pointer transition-colors" />
-                    </div>
-
-                    {/* Expandable bio */}
-                    <AnimatePresence>
-                      {isBioOpen && trainer.bio && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: 'easeOut' }}
-                          className="overflow-hidden"
-                        >
-                          <p className="font-body font-light text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-700">
-                            {trainer.bio}
-                          </p>
-                          {trainer.external && (
-                            <div className="flex flex-col gap-1 mt-3">
-                              {trainer.external.map(link => (
-                                <a
-                                  key={link.href}
-                                  href={link.href}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="font-display font-semibold text-sm text-accent underline underline-offset-4 hover:no-underline"
-                                  onClick={e => e.stopPropagation()}
-                                >
-                                  {link.label} →
-                                </a>
-                              ))}
-                            </div>
-                          )}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    <button
-                      onClick={() => setBookingTrainer(trainer)}
-                      className="w-full font-display font-semibold text-sm bg-accent text-white py-3 mt-4 hover:bg-pink-700 transition"
-                    >
-                      ОБРАТИ ТРЕНЕРА
-                    </button>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
+                  ОБРАТИ ТРЕНЕРА
+                </button>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
-      <TrainerBookingModal trainer={bookingTrainer} onClose={() => setBookingTrainer(null)} />
+
+      {/* Bio modal (photo click) */}
+      <TrainerBioModal
+        trainer={bioTrainer}
+        onClose={() => setBioTrainer(null)}
+        onBook={() => setBookingTrainer(bioTrainer)}
+      />
+
+      {/* Booking form modal (ОБРАТИ ТРЕНЕРА button) */}
+      <TrainerBookingModal
+        trainer={bookingTrainer}
+        onClose={() => setBookingTrainer(null)}
+      />
     </section>
   );
 }

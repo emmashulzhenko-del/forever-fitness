@@ -2,7 +2,7 @@ import { X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface Props {
-  trainer: { name: string; specialty: string } | null
+  trainer: { name: string; specialty: string; bioShort?: string } | null
   onClose: () => void
 }
 
@@ -26,7 +26,12 @@ export default function TrainerBookingModal({ trainer, onClose }: Props) {
             </button>
             <p className="text-[11px] tracking-widest text-accent uppercase font-body mb-1">Записатися до тренера</p>
             <h3 className="font-display text-2xl text-zinc-900 dark:text-white mb-1">{trainer.name}</h3>
-            <p className="font-body text-sm text-zinc-500 mb-6">{trainer.specialty}</p>
+            <p className="font-body text-xs text-accent uppercase tracking-widest mb-2">{trainer.specialty}</p>
+            {trainer.bioShort && (
+              <p className="font-body font-light text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-4 pb-4 border-b border-zinc-100 dark:border-zinc-700">
+                {trainer.bioShort}
+              </p>
+            )}
 
             <form
               name="trainer-booking"

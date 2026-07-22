@@ -210,9 +210,9 @@ export default function Hero() {
           className="w-full"
           style={{
             aspectRatio: '4/5',
-            backgroundImage: "url('/hero-test-2.jpg')",
+            backgroundImage: "url('/mobile-hero-final.webp')",
             backgroundSize: 'cover',
-            backgroundPosition: '60% center'
+            backgroundPosition: 'center top'
           }}
         />
 

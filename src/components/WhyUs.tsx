@@ -8,7 +8,7 @@ const advantages = [
     title: 'Автентичний лофт',
     subtitle: 'Тренажерний зал',
     teaser: 'Сучасне обладнання у просторі справжнього лофту з видом на історичний Львів',
-    photo: '/whyus/loft.webp',
+    photo: '/whyus/loft-final.webp',
     photoAlt: 'Автентичний лофт тренажерного залу Forever у Львові',
     variant: 'neutral' as const,
     expanded: {
