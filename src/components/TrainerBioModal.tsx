@@ -8,6 +8,7 @@ export interface TrainerForModal {
   exp: string;
   photo: string;
   bio?: string;
+  external?: { label: string; href: string }[];
 }
 
 interface Props {
@@ -76,9 +77,29 @@ export default function TrainerBioModal({ trainer, onClose, onBook }: Props) {
               <p className="font-body text-sm text-white/55 mb-6">{trainer.exp}</p>
 
               {trainer.bio && (
-                <p className="font-body font-light text-sm text-white/80 leading-relaxed mb-8">
-                  {trainer.bio}
-                </p>
+                <div className="mb-6 space-y-4">
+                  {trainer.bio.split('\n\n').map((para, i) => (
+                    <p key={i} className="font-body font-light text-sm text-white/80 leading-relaxed">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              {trainer.external && trainer.external.length > 0 && (
+                <div className="flex flex-col gap-2 mb-6">
+                  {trainer.external.map(link => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-display font-semibold text-sm text-accent underline underline-offset-4 hover:no-underline"
+                    >
+                      {link.label} →
+                    </a>
+                  ))}
+                </div>
               )}
 
               <button

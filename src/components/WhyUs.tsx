@@ -166,7 +166,7 @@ export default function WhyUs() {
             >
               {/* Photo (loft card only) */}
               {adv.photo && (
-                <div className="w-full aspect-[21/9] overflow-hidden">
+                <div className="w-full aspect-[3/2] overflow-hidden">
                   <img
                     src={adv.photo}
                     alt={adv.photoAlt}
