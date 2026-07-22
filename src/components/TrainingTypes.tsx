@@ -3,29 +3,29 @@ import type { Variants } from 'framer-motion';
 
 const programs = [
   { title: 'ТРЕНАЖЕРНИЙ ЗАЛ', photo: '/programs/gym.webp',
-    desc: "Сила і м'язова маса. Три зони з професійним обладнанням." },
+    desc: 'Сила та Естетика тіла. Три зони для ефективних тренувань.' },
   { title: 'ПЕРСОНАЛЬНІ ТРЕНУВАННЯ', photo: '/programs/personal.webp',
-    desc: 'Індивідуальна програма — найшвидший шлях до результату.' },
+    desc: 'Твій індивідуальний план з професійним тренером. Гарантія результату.' },
   { title: 'МАСАЖ', photo: '/programs/massage.webp',
-    desc: "Відновлення життєвих сил і підтримання здоров'я рухового апарату." },
+    desc: 'Відновлення життєвих сил і здоров\'я рухового апарату.' },
   { title: 'ЧЕРГОВИЙ ТРЕНЕР', photo: '/programs/duty-trainer.webp',
-    desc: 'Тренування з тренером за 200 грн — ідеально для початку.' },
+    desc: 'Базові персоналізовані силові тренування за 200 грн.' },
   { title: 'ДЖАМПІНГ', photo: '/programs/jumping.webp',
-    desc: 'До 800 ккал за тренування без навантаження на суглоби.' },
-  { title: 'TRX', photo: '/programs/trx.webp',
-    desc: 'Все тіло за 50 хвилин — сила, баланс, витривалість.' },
+    desc: 'Потужне кардіо, без одноманітних рухів. Стрибкова аеробіка на батутах.' },
+  { title: 'TRX (Струнка фігура)', photo: '/programs/trx.webp',
+    desc: 'Комплексне функціональне тренування з TRX-петлями. Для бездоганної фігури.' },
   { title: 'HIIT', photo: '/programs/hiit.webp',
-    desc: 'Максимальне спалення жиру. Метаболізм працює ще 24 години.' },
-  { title: 'STRETCHING + МОБІЛІТІ', photo: '/programs/stretching-mobility.webp',
-    desc: 'Рух без обмежень. Мʼяка розтяжка усіх мʼязових груп. Робота з фасціями.' },
+    desc: 'Високоінтенсивне інтервальне тренування. Приріст метаболізму, мінус зайві кілограми і об\'єми.' },
+  { title: 'СТРЕТЧИНГ + МОБІЛІТІ', photo: '/programs/stretching-mobility.webp',
+    desc: 'Рух без обмежень. Коректне покращення гнучкості усіх м\'язових ланцюгів.' },
   { title: 'ФЛАЙ ЙОГА', photo: '/programs/fly-yoga.webp',
     desc: 'Декомпресійна Йога терапія. Коректна практика в гамаках.' },
   { title: 'ХАТХА ЙОГА', photo: '/programs/hatha-yoga.webp',
     desc: 'Баланс тіла і нервової системи через асани та дихання.' },
-  { title: 'FITMAMA', photo: '/programs/fitmama.webp',
+  { title: 'FITMAMA + КІНЕЗІОТЕРАПІЯ', photo: '/programs/fitmama.webp',
     desc: 'Персональні тренування з відновлення і реабілітації.' },
-  { title: 'КІНЕЗІОТЕРАПІЯ', photo: '/programs/kinesio.webp',
-    desc: 'Персональні тренування з відновлення і реабілітації.' },
+  { title: 'ТАБАТА', photo: '/programs/tabata.webp',
+    desc: 'Інтервальне тренування 20/10. Максимальне навантаження за мінімум часу.' },
 ]
 
 const container: Variants = {
@@ -48,7 +48,7 @@ export default function TrainingTypes() {
           НАШІ ПРОГРАМИ
         </h2>
         <p className="font-body font-light text-center text-zinc-500 mb-12">
-          Обери напрямок, що підходить саме тобі
+          Обери вподобані напрямки
         </p>
 
         <motion.div

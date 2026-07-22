@@ -30,9 +30,11 @@ type GymCard = {
 
 const gymCards: GymCard[] = [
   { icon: Clock, title: 'ГОДИНИ РОБОТИ',
-    desc: 'Пн–Сб: 8:00–21:00. Неділя — вихідний.' },
+    desc: 'Пн–Сб: 8:00–21:00. Неділя — вихідний.',
+    links: [{ label: 'ЗАПИСАТИСЬ: +38 (067) 149 69 30', href: 'tel:+380671496930' }] },
   { icon: Dumbbell, title: 'ЗОНИ ЗАЛУ',
-    desc: 'Тренажерний лофт 80 м² · Кросфіт і кардіо 70 м² · TRX, functional training 80 м²' },
+    desc: 'Тренажерний лофт 80 м² · Кросфіт і кардіо 70 м² · TRX, functional training 80 м²',
+    links: [{ label: 'ЗАПИСАТИСЬ: +38 (067) 149 69 30', href: 'tel:+380671496930' }] },
   { icon: User, title: 'ЧЕРГОВИЙ ТА ПЕРСОНАЛЬНИЙ ТРЕНЕР',
     desc: 'Погоджуємо особисто, в чаті, або заповніть форму.',
     links: [
@@ -144,6 +146,11 @@ export default function Schedule() {
               {/* Scroll hint label */}
               <p className="font-body text-[11px] text-zinc-400 mt-2 text-right md:hidden">
                 ← прокрутіть →
+              </p>
+              {/* Disclaimer */}
+              <p className="font-body text-xs text-zinc-500 dark:text-zinc-400 mt-4">
+                <strong>Актуальний час занять уточнюйте за телефоном:</strong>{' '}
+                <a href="tel:+380671496930" className="text-accent hover:underline">+38 (067) 149 69 30</a>
               </p>
             </div>
           )}
