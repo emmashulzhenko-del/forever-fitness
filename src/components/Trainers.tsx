@@ -157,9 +157,12 @@ export default function Trainers() {
                   <p className="font-body font-light text-xs text-zinc-500 dark:text-zinc-400">{trainer.exp}</p>
                 </div>
 
+                {/* Flex spacer: min 20 px gap, absorbs extra height so button stays pinned */}
+                <div className="min-h-[20px] flex-1" />
+
                 <button
                   onClick={() => setBookingTrainer(trainer)}
-                  className="w-full font-display font-semibold text-sm bg-accent text-white py-3 mt-auto hover:bg-pink-700 transition"
+                  className="w-full font-display font-semibold text-sm bg-accent text-white py-3 hover:bg-pink-700 transition"
                 >
                   ОБРАТИ ТРЕНЕРА
                 </button>

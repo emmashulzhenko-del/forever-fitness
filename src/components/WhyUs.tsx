@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Dumbbell, Award, Activity, Heart, X } from 'lucide-react'
+import { Dumbbell, Award, Activity, Heart, Maximize2 } from 'lucide-react'
+import ModalOverlay from './ModalOverlay'
 
 const advantages = [
   {
@@ -101,11 +101,13 @@ const advantages = [
   }
 ]
 
+type Advantage = typeof advantages[0]
+
 // Bento layout: row1 = [0=wide loft, 1=narrow teal], row2 = [2=narrow pink, 3=wide massage]
 const wideIndices = new Set([0, 3])
 
 export default function WhyUs() {
-  const [active, setActive] = useState<number | null>(null)
+  const [active, setActive] = useState<Advantage | null>(null)
 
   return (
     <section className="py-20 bg-zinc-50 dark:bg-zinc-900 px-[clamp(20px,6vw,96px)]">
@@ -119,11 +121,10 @@ export default function WhyUs() {
         Пробуджуємо силу. Відновлюємо здоров'я. Надихаємо на життя.
       </p>
 
-      {/* Bento grid */}
+      {/* Bento grid — static height, no accordion reflow */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
         {advantages.map((adv, i) => {
           const Icon = adv.icon
-          const isActive = active === i
           const isWide = wideIndices.has(i)
           const isPink = adv.variant === 'pink'
           const isTeal = adv.variant === 'teal'
@@ -135,38 +136,24 @@ export default function WhyUs() {
             ? 'bg-teal border-teal'
             : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-700'
 
-          const cardHover = isColored
-            ? 'hover:opacity-90'
-            : 'hover:border-accent'
-
           const titleColor = isColored ? 'text-white' : 'text-zinc-900 dark:text-white'
           const subtitleColor = isColored ? 'text-white/70' : 'text-zinc-500 dark:text-zinc-400'
           const teaserColor = isColored ? 'text-white/80' : 'text-zinc-500 dark:text-zinc-400'
-          // Icon badge
-          const iconBadgeBg = isPink
-            ? 'bg-white'
-            : isTeal
-            ? 'bg-white'
-            : 'bg-accent'
-          const iconColor = isPink
-            ? 'text-accent'
-            : isTeal
-            ? 'text-teal'
-            : 'text-white'
+          const iconBadgeBg = isPink ? 'bg-white' : isTeal ? 'bg-white' : 'bg-accent'
+          const iconColor = isPink ? 'text-accent' : isTeal ? 'text-teal' : 'text-white'
+          const hintColor = isColored ? 'bg-white/20 text-white' : 'bg-black/60 text-white'
 
           return (
             <div
               key={adv.title}
-              onClick={() => setActive(isActive ? null : i)}
-              className={`cursor-pointer border transition-colors overflow-hidden flex flex-col ${
+              onClick={() => setActive(adv)}
+              className={`cursor-pointer border transition-colors overflow-hidden flex flex-col group ${
                 isWide ? 'lg:col-span-2' : 'lg:col-span-1'
-              } ${cardBg} ${
-                isActive && !isColored ? 'border-accent' : ''
-              } ${cardHover}`}
+              } ${cardBg} hover:opacity-90`}
             >
               {/* Photo (loft card only) */}
               {adv.photo && (
-                <div className="w-full aspect-[3/2] overflow-hidden">
+                <div className="relative w-full aspect-[3/2] overflow-hidden">
                   <img
                     src={adv.photo}
                     alt={adv.photoAlt}
@@ -174,12 +161,16 @@ export default function WhyUs() {
                     loading="lazy"
                     decoding="async"
                   />
+                  {/* Hover hint */}
+                  <div className={`absolute top-3 right-3 ${hintColor} text-[10px] px-2 py-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none`}>
+                    <Maximize2 size={10} />
+                    детальніше
+                  </div>
                 </div>
               )}
 
               {/* Text content */}
               <div className={`p-6 flex flex-col flex-1 ${!adv.photo ? 'justify-center' : 'pb-10'}`}>
-                {/* Icon badge */}
                 <div className={`w-10 h-10 rounded-full ${iconBadgeBg} flex items-center justify-center mb-3`}>
                   <Icon className={`w-5 h-5 ${iconColor}`} />
                 </div>
@@ -192,8 +183,15 @@ export default function WhyUs() {
                 <p className={`font-body font-light text-sm leading-relaxed mb-3 ${teaserColor}`}>
                   {adv.teaser}
                 </p>
+                {/* Hint for non-photo cards */}
+                {!adv.photo && (
+                  <div className={`mt-auto self-start text-[10px] px-2 py-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${hintColor}`}>
+                    <Maximize2 size={10} />
+                    детальніше
+                  </div>
+                )}
                 {isTeal && (
-                  <div className="flex flex-col gap-2 mt-4">
+                  <div className="flex flex-col gap-2 mt-3">
                     <a href="#schedule" onClick={e => e.stopPropagation()}
                        className="font-display font-semibold text-sm text-white underline underline-offset-4 hover:no-underline">
                       ЗАПИСАТИСЬ ЗАРАЗ →
@@ -210,74 +208,58 @@ export default function WhyUs() {
         })}
       </div>
 
-      {/* Expanded content panel */}
-      <AnimatePresence mode="wait">
-        {active !== null && (
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="overflow-hidden max-w-6xl mx-auto"
-          >
-            <div className="mt-6 p-8 bg-white dark:bg-zinc-800 border border-accent/30 relative">
-              <button
-                onClick={() => setActive(null)}
-                className="absolute top-4 right-4 text-zinc-400 hover:text-accent"
-                aria-label="Закрити"
-              >
-                <X className="w-5 h-5" />
-              </button>
-              <h4 className="font-display text-2xl text-zinc-900 dark:text-white mb-4">
-                {advantages[active].expanded.heading}
-              </h4>
+      {/* Modal — centered, scrollable, no section reflow */}
+      <ModalOverlay open={!!active} onClose={() => setActive(null)} maxWidth="max-w-xl">
+        {active && (
+          <div className="p-8 pt-12">
+            <h4 className="font-display text-2xl text-white mb-4">
+              {active.expanded.heading}
+            </h4>
 
-              {advantages[active].expanded.body && (
-                <p className="font-body font-light text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-3xl mb-4">
-                  {advantages[active].expanded.body}
-                </p>
-              )}
+            {active.expanded.body && (
+              <p className="font-body font-light text-sm text-white/75 leading-relaxed mb-5">
+                {active.expanded.body}
+              </p>
+            )}
 
-              {advantages[active].expanded.items && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {advantages[active].expanded.items!.map(item => (
-                    <div key={item.title}>
-                      <p className="font-display font-semibold text-base text-zinc-900 dark:text-white mb-1">{item.title}</p>
-                      <p className="font-body font-light text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{item.body}</p>
+            {active.expanded.items && (
+              <div className="grid grid-cols-1 gap-4 mb-2">
+                {active.expanded.items.map(item => (
+                  <div key={item.title} className="border-l-2 border-accent pl-4">
+                    <p className="font-display font-semibold text-sm text-white mb-1">{item.title}</p>
+                    <p className="font-body font-light text-sm text-white/70 leading-relaxed">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {active.expanded.stats && (
+              <div className="flex gap-8 mt-4 flex-wrap">
+                {active.expanded.stats.map(s => (
+                  <div key={s.label}>
+                    <div className="font-display text-3xl text-accent font-bold">{s.value}</div>
+                    <div className="font-body text-xs text-white/50 uppercase tracking-wider mt-1">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {active.expanded.services && (
+              <div className="divide-y divide-white/10 mt-2">
+                {active.expanded.services.map(s => (
+                  <div key={s.name} className="py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-1">
+                    <p className="font-body font-medium text-sm text-white">{s.name}</p>
+                    <div className="flex gap-4 text-sm">
+                      <span className="font-body font-semibold text-accent">{s.price}</span>
+                      <span className="font-body font-light text-white/50">{s.course}</span>
                     </div>
-                  ))}
-                </div>
-              )}
-
-              {advantages[active].expanded.stats && (
-                <div className="flex gap-8 mt-4 flex-wrap">
-                  {advantages[active].expanded.stats!.map(s => (
-                    <div key={s.label}>
-                      <div className="font-display text-3xl text-accent font-bold">{s.value}</div>
-                      <div className="font-body text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mt-1">{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {advantages[active].expanded.services && (
-                <div className="divide-y divide-zinc-100 dark:divide-zinc-700">
-                  {advantages[active].expanded.services!.map(s => (
-                    <div key={s.name} className="py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-1">
-                      <p className="font-body font-medium text-sm text-zinc-900 dark:text-white">{s.name}</p>
-                      <div className="flex gap-4 text-sm">
-                        <span className="font-body font-semibold text-accent">{s.price}</span>
-                        <span className="font-body font-light text-zinc-400">{s.course}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </motion.div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         )}
-      </AnimatePresence>
+      </ModalOverlay>
     </section>
   )
 }

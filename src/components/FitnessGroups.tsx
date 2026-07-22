@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { X, Flame, Anchor, Timer, Rabbit, Wind, Flower2, StretchHorizontal, HeartPulse } from 'lucide-react'
+import { useState } from 'react'
+import { Flame, Anchor, Timer, Rabbit, Wind, Flower2, StretchHorizontal, HeartPulse } from 'lucide-react'
+import ModalOverlay from './ModalOverlay'
 
 const groups = [
   { name: 'HIIT', icon: Flame, desc: 'Високоінтенсивне інтервальне тренування. Приріст метаболізму, мінус зайві кілограми і об\'єми.', photo: '/programs/hiit.webp' },
@@ -14,77 +14,6 @@ const groups = [
 ]
 
 type Group = typeof groups[0]
-
-function GroupModal({ group, onClose }: { group: Group; onClose: () => void }) {
-  const Icon = group.icon
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
-  }, [])
-
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [onClose])
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[300] bg-black/75 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.95, opacity: 0 }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
-        onClick={e => e.stopPropagation()}
-        className="relative w-full max-w-sm overflow-hidden bg-zinc-900"
-      >
-        {/* Photo */}
-        {group.photo && (
-          <div className="w-full aspect-[4/3] overflow-hidden">
-            <img
-              src={group.photo}
-              alt={group.name}
-              className="w-full h-full object-cover"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-        )}
-        {/* Content */}
-        <div className="p-6">
-          <div className="flex items-start justify-between gap-4 mb-3">
-            <div className="flex items-center gap-3">
-              <Icon className="w-6 h-6 text-accent shrink-0" />
-              <h3 className="font-display font-semibold text-lg text-white leading-snug">{group.name}</h3>
-            </div>
-            <button
-              onClick={onClose}
-              className="text-white/50 hover:text-white transition-colors shrink-0 mt-0.5"
-              aria-label="Закрити"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          <p className="font-body font-light text-sm text-white/75 leading-relaxed">{group.desc}</p>
-          <a
-            href="#schedule"
-            onClick={onClose}
-            className="mt-5 block w-full font-display font-semibold text-sm bg-accent text-white py-3 text-center hover:bg-pink-700 transition"
-          >
-            ПЕРЕГЛЯНУТИ РОЗКЛАД
-          </a>
-        </div>
-      </motion.div>
-    </motion.div>
-  )
-}
 
 export default function FitnessGroups() {
   const [active, setActive] = useState<Group | null>(null)
@@ -116,11 +45,34 @@ export default function FitnessGroups() {
         })}
       </div>
 
-      <AnimatePresence>
-        {active && (
-          <GroupModal group={active} onClose={() => setActive(null)} />
-        )}
-      </AnimatePresence>
+      <ModalOverlay open={!!active} onClose={() => setActive(null)}>
+        {active && (() => {
+          const Icon = active.icon
+          return (
+            <>
+              {active.photo && (
+                <div className="w-full aspect-[4/3] overflow-hidden">
+                  <img src={active.photo} alt={active.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                </div>
+              )}
+              <div className="p-6">
+                <div className="flex items-start gap-3 mb-3 pr-6">
+                  <Icon className="w-6 h-6 text-accent shrink-0 mt-0.5" />
+                  <h3 className="font-display font-semibold text-lg text-white leading-snug">{active.name}</h3>
+                </div>
+                <p className="font-body font-light text-sm text-white/75 leading-relaxed">{active.desc}</p>
+                <a
+                  href="#schedule"
+                  onClick={() => setActive(null)}
+                  className="mt-5 block w-full font-display font-semibold text-sm bg-accent text-white py-3 text-center hover:bg-pink-700 transition"
+                >
+                  ПЕРЕГЛЯНУТИ РОЗКЛАД
+                </a>
+              </div>
+            </>
+          )
+        })()}
+      </ModalOverlay>
     </section>
   )
 }
