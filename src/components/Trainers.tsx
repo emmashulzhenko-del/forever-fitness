@@ -34,7 +34,7 @@ const trainers: Trainer[] = [
   },
   {
     name: 'Діана Непомяща',
-    specialty: 'ТРЕНАЖЕРНИЙ ЗАЛ · ПЕРСОНАЛЬНИЙ ТРЕНІНГ',
+    specialty: 'ПЕРСОНАЛЬНИЙ ТРЕНІНГ',
     exp: 'Досвід: 5 років',
     photo: '/trainers/diana-nepomyashcha.webp',
     bio: 'Персональна тренерка тренажерного залу, яка допомагає дорослим і підліткам досягати своїх фітнес-цілей. Має практичний досвід, постійних клієнтів та індивідуальний підхід до кожного. З дитинства займається спортом: спортивною й художньою гімнастикою, акробатикою, стрільбою з лука та професійним волейболом. Постійно вдосконалює свої знання та здобуває медичну освіту, щоб тренування були максимально ефективними й безпечними. На персональних заняттях Діана складає індивідуальні програми, навчає правильній техніці виконання вправ і допомагає стати сильнішими, витривалішими та впевненішими у собі.',
@@ -125,14 +125,14 @@ export default function Trainers() {
             <motion.div
               key={trainer.name}
               variants={item}
-              className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden group hover:-translate-y-1 transition-transform duration-150"
+              className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden group hover:-translate-y-1 transition-transform duration-150 flex flex-col"
               style={{ borderTop: '3px solid transparent' }}
               onMouseEnter={e => (e.currentTarget.style.borderTopColor = '#E8279A')}
               onMouseLeave={e => (e.currentTarget.style.borderTopColor = 'transparent')}
             >
               {/* Clickable photo */}
               <div
-                className="relative cursor-pointer overflow-hidden"
+                className="relative cursor-pointer overflow-hidden shrink-0"
                 onClick={() => setBioTrainer(trainer)}
               >
                 <img
@@ -150,14 +150,14 @@ export default function Trainers() {
               </div>
 
               {/* Body */}
-              <div className="p-5">
-                <p className="font-display text-xl text-zinc-900 dark:text-white">{trainer.name}</p>
-                <p className="font-body font-light text-[10px] text-accent uppercase tracking-wide whitespace-nowrap overflow-hidden text-ellipsis mt-1">{trainer.specialty}</p>
+              <div className="p-5 flex-1 flex flex-col">
+                <p className="font-display text-xl text-zinc-900 dark:text-white min-h-[3.5rem]">{trainer.name}</p>
+                <p className="font-body font-light text-[10px] text-accent uppercase tracking-wide mt-1 min-h-[2rem]">{trainer.specialty}</p>
                 <p className="font-body font-light text-xs text-zinc-500 dark:text-zinc-400 mt-1">{trainer.exp}</p>
 
                 <button
                   onClick={() => setBookingTrainer(trainer)}
-                  className="w-full font-display font-semibold text-sm bg-accent text-white py-3 mt-4 hover:bg-pink-700 transition"
+                  className="w-full font-display font-semibold text-sm bg-accent text-white py-3 mt-auto hover:bg-pink-700 transition"
                 >
                   ОБРАТИ ТРЕНЕРА
                 </button>
