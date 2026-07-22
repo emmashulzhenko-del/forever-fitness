@@ -62,9 +62,9 @@ export default function TrainingTypes() {
             <motion.div
               key={prog.title}
               variants={item}
-              className="group border-r border-b border-zinc-200 dark:border-zinc-800 overflow-hidden"
+              className="group border-r border-b border-zinc-200 dark:border-zinc-800 overflow-hidden flex flex-col"
             >
-              <div className="w-full aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+              <div className="w-full aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-800 shrink-0">
                 <img
                   src={prog.photo}
                   alt={prog.title}
@@ -74,8 +74,8 @@ export default function TrainingTypes() {
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 />
               </div>
-              <div className="p-5 bg-white dark:bg-zinc-950">
-                <p className={`font-display text-zinc-900 dark:text-white whitespace-nowrap ${prog.title.length > 15 ? 'text-[11px] tracking-tight' : 'text-base'}`}>{prog.title}</p>
+              <div className="p-5 bg-white dark:bg-zinc-950 flex-1">
+                <p className="font-display text-base text-zinc-900 dark:text-white">{prog.title}</p>
                 <p className="font-body font-light text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed">{prog.desc}</p>
               </div>
             </motion.div>

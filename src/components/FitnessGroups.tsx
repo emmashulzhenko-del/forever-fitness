@@ -30,17 +30,19 @@ export default function FitnessGroups() {
           <div key={g.name} className="flex flex-col">
             <button
               onClick={() => setOpen(open === i ? null : i)}
-              className={`relative p-5 text-left border transition-all ${
+              className={`relative p-6 text-left border transition-all ${
                 open === i
                   ? 'border-accent bg-accent/5'
                   : 'border-zinc-200 dark:border-zinc-700 hover:border-accent/50'
               }`}
             >
-              <ChevronDown className={`absolute top-4 right-4 w-4 h-4 text-accent shrink-0 transition-transform ${open === i ? 'rotate-180' : ''}`} />
               <g.icon className="w-7 h-7 text-accent mb-3" />
-              <span className="font-display font-semibold text-[11px] tracking-tight text-zinc-900 dark:text-white whitespace-nowrap block">
-                {g.name}
-              </span>
+              <div className="flex items-start justify-between gap-2">
+                <span className="font-display font-semibold text-sm text-zinc-900 dark:text-white">
+                  {g.name}
+                </span>
+                <ChevronDown className={`w-4 h-4 text-accent shrink-0 mt-0.5 transition-transform ${open === i ? 'rotate-180' : ''}`} />
+              </div>
             </button>
             <AnimatePresence>
               {open === i && (
