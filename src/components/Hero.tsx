@@ -212,7 +212,7 @@ export default function Hero() {
             aspectRatio: '4/5',
             backgroundImage: "url('/mobile-hero-final.webp')",
             backgroundSize: 'cover',
-            backgroundPosition: 'center 92%'
+            backgroundPosition: 'center 20%'
           }}
         />
 

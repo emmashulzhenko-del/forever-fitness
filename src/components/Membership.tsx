@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 type Tab = 'gym' | 'fitness' | 'gym-mobility' | 'personal';
@@ -22,8 +22,45 @@ const fitnessRows = [
 const thClass = 'font-display text-sm text-white uppercase tracking-widest p-4 text-left bg-zinc-900 dark:bg-zinc-800 border border-zinc-700';
 const tdClass = 'font-body text-sm p-4 border border-zinc-200 dark:border-zinc-700';
 
+const tabHashes: Record<Tab, string> = {
+  'gym': '#membership-gym',
+  'fitness': '#membership-fitness',
+  'gym-mobility': '#membership-gym-mobility',
+  'personal': '#membership-personal',
+};
+
+function hashToTab(hash: string): Tab | null {
+  if (hash === '#membership-fitness') return 'fitness';
+  if (hash === '#membership-gym-mobility') return 'gym-mobility';
+  if (hash === '#membership-personal') return 'personal';
+  if (hash === '#membership-gym' || hash === '#membership') return 'gym';
+  return null;
+}
+
 export default function Membership() {
   const [tab, setTab] = useState<Tab>('gym');
+
+  useEffect(() => {
+    const applyHash = () => {
+      const hash = window.location.hash;
+      const t = hashToTab(hash);
+      if (t) {
+        setTab(t);
+        // Browser won't auto-scroll for sub-hashes (no matching element id), do it manually
+        if (hash !== '#membership') {
+          document.getElementById('membership')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+    applyHash();
+    window.addEventListener('hashchange', applyHash);
+    return () => window.removeEventListener('hashchange', applyHash);
+  }, []);
+
+  function switchTab(t: Tab) {
+    setTab(t);
+    history.replaceState(null, '', tabHashes[t]);
+  }
 
   const tabs: { key: Tab; label: string }[] = [
     { key: 'gym', label: 'ТРЕНАЖЕРНИЙ ЗАЛ' },
@@ -56,7 +93,7 @@ export default function Membership() {
             {tabs.map(t => (
               <button
                 key={t.key}
-                onClick={() => setTab(t.key)}
+                onClick={() => switchTab(t.key)}
                 className={`font-display px-6 py-2 transition-colors duration-200 ${
                   tab === t.key
                     ? 'bg-accent text-white'

@@ -146,10 +146,10 @@ export default function WhyUs() {
           return (
             <div
               key={adv.title}
-              onClick={() => setActive(adv)}
-              className={`cursor-pointer border transition-colors overflow-hidden flex flex-col group ${
+              onClick={isTeal ? undefined : () => setActive(adv)}
+              className={`${isTeal ? '' : 'cursor-pointer'} border transition-colors overflow-hidden flex flex-col group ${
                 isWide ? 'lg:col-span-2' : 'lg:col-span-1'
-              } ${cardBg} hover:opacity-90`}
+              } ${cardBg} ${isTeal ? '' : 'hover:opacity-90'}`}
             >
               {/* Photo (loft card only) */}
               {adv.photo && (
@@ -183,23 +183,24 @@ export default function WhyUs() {
                 <p className={`font-body font-light text-sm leading-relaxed mb-3 ${teaserColor}`}>
                   {adv.teaser}
                 </p>
-                {/* Hint for non-photo cards */}
-                {!adv.photo && (
-                  <div className={`mt-auto self-start text-[10px] px-2 py-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${hintColor}`}>
-                    <Maximize2 size={10} />
-                    детальніше
-                  </div>
-                )}
+                {/* Teal CTA links — directly under teaser, no modal */}
                 {isTeal && (
-                  <div className="flex flex-col gap-2 mt-3">
-                    <a href="#schedule" onClick={e => e.stopPropagation()}
+                  <div className="flex flex-col gap-2 mt-4">
+                    <a href="#schedule"
                        className="font-display font-semibold text-sm text-white underline underline-offset-4 hover:no-underline">
                       ЗАПИСАТИСЬ ЗАРАЗ →
                     </a>
-                    <a href="#membership" onClick={e => e.stopPropagation()}
+                    <a href="#membership"
                        className="font-display font-semibold text-sm text-white underline underline-offset-4 hover:no-underline">
                       Перше тренування −50% →
                     </a>
+                  </div>
+                )}
+                {/* Hint for non-photo, non-teal cards (modal affordance) */}
+                {!adv.photo && !isTeal && (
+                  <div className={`mt-auto self-start text-[10px] px-2 py-1 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${hintColor}`}>
+                    <Maximize2 size={10} />
+                    детальніше
                   </div>
                 )}
               </div>

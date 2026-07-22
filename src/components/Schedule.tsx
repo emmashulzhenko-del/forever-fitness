@@ -47,10 +47,25 @@ export default function Schedule() {
   const [tab, setTab] = useState<'fitness' | 'gym'>('gym');
 
   useEffect(() => {
-    const hash = window.location.hash
-    if (hash.includes('tab=gym')) setTab('gym')
-    else if (hash.includes('tab=fitness')) setTab('fitness')
+    const applyHash = () => {
+      const hash = window.location.hash
+      if (hash === '#schedule-groups') {
+        setTab('fitness')
+        document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' })
+      } else if (hash === '#schedule-gym') {
+        setTab('gym')
+        document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+    applyHash()
+    window.addEventListener('hashchange', applyHash)
+    return () => window.removeEventListener('hashchange', applyHash)
   }, [])
+
+  function switchTab(t: 'fitness' | 'gym') {
+    setTab(t)
+    history.replaceState(null, '', t === 'fitness' ? '#schedule-groups' : '#schedule-gym')
+  }
 
   return (
     <section id="schedule" className="py-20 bg-zinc-50 dark:bg-zinc-900">
@@ -77,7 +92,7 @@ export default function Schedule() {
               {(['gym', 'fitness'] as const).map(t => (
                 <button
                   key={t}
-                  onClick={() => setTab(t)}
+                  onClick={() => switchTab(t)}
                   className={`font-display px-6 py-2 transition-colors duration-200 ${
                     tab === t
                       ? 'bg-accent text-white'
