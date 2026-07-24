@@ -123,7 +123,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-white dark:bg-zinc-950 flex flex-col items-center justify-center gap-6 md:hidden overflow-y-auto py-8"
+            className="fixed inset-0 z-40 bg-white dark:bg-zinc-950 flex flex-col items-center justify-center gap-5 md:hidden overflow-y-auto py-8"
           >
             {links.map(link => {
               const sub = 'sub' in link ? link.sub : undefined;
@@ -137,13 +137,13 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
                     {link.label}
                   </a>
                   {sub && (
-                    <div className="flex flex-col items-center gap-1">
+                    <div className="flex flex-wrap justify-center gap-2 max-w-[300px]">
                       {sub.map(s => (
                         <a
                           key={s.label}
                           href={s.href}
                           onClick={() => setMenuOpen(false)}
-                          className="font-body text-sm text-zinc-500 dark:text-zinc-400 hover:text-accent transition-colors"
+                          className="font-body text-sm text-accent border border-accent rounded-full px-4 min-h-[44px] inline-flex items-center hover:bg-accent hover:text-white active:bg-accent active:text-white transition-colors"
                         >
                           {s.label}
                         </a>
@@ -156,7 +156,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
             <a
               href="#membership"
               onClick={() => setMenuOpen(false)}
-              className="font-display text-lg bg-accent text-white px-8 py-4 hover:bg-pink-700 transition-colors mt-4"
+              className="font-display text-lg bg-accent text-white px-8 py-4 hover:bg-pink-700 transition-colors mt-2"
             >
               ПЕРШЕ ТРЕНУВАННЯ −50%
             </a>
