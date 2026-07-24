@@ -32,6 +32,21 @@ const links = [
 
 export default function Navbar({ dark, onToggleTheme }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
+
+  function openMenu() {
+    setExpandedItem(null); // always start collapsed
+    setMenuOpen(true);
+  }
+
+  function closeMenu() {
+    setMenuOpen(false);
+  }
+
+  function toggleSub(label: string) {
+    // one open at a time: setting a new label closes the previous
+    setExpandedItem(prev => (prev === label ? null : label));
+  }
 
   return (
     <>
@@ -53,7 +68,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
           />
         </a>
 
-        {/* Center nav */}
+        {/* Center nav — desktop only, untouched */}
         <nav className="hidden md:flex gap-7 flex-1 justify-center">
           {links.map(link => {
             const sub = 'sub' in link ? link.sub : undefined;
@@ -77,7 +92,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
                   {link.label}
                   <ChevronDown size={12} className="opacity-50 group-hover:opacity-100 transition-opacity" />
                 </a>
-                {/* Dropdown */}
+                {/* Desktop dropdown */}
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 hidden group-hover:block z-10">
                   <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-lg py-1 min-w-[180px]">
                     {sub.map(s => (
@@ -107,7 +122,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
           </a>
           <button
             className="md:hidden p-2 text-zinc-700 dark:text-zinc-300"
-            onClick={() => setMenuOpen(v => !v)}
+            onClick={() => (menuOpen ? closeMenu() : openMenu())}
             aria-label="Toggle menu"
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -127,35 +142,73 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
           >
             {links.map(link => {
               const sub = 'sub' in link ? link.sub : undefined;
+              const isExpanded = expandedItem === link.label;
+
               return (
-                <div key={link.label} className="flex flex-col items-center gap-2">
-                  <a
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="font-display text-3xl text-zinc-900 dark:text-white hover:text-accent transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                  {sub && (
-                    <div className="flex flex-wrap justify-center gap-2 max-w-[300px]">
-                      {sub.map(s => (
-                        <a
-                          key={s.label}
-                          href={s.href}
-                          onClick={() => setMenuOpen(false)}
-                          className="font-body text-sm text-accent border border-accent rounded-full px-4 min-h-[44px] inline-flex items-center hover:bg-accent hover:text-white active:bg-accent active:text-white transition-colors"
+                <div key={link.label} className="flex flex-col items-center">
+                  {/* Parent row: text link (navigates) + chevron button (toggles chips) */}
+                  <div className="flex items-center">
+                    <a
+                      href={link.href}
+                      onClick={closeMenu}
+                      className="font-display text-3xl text-zinc-900 dark:text-white hover:text-accent transition-colors"
+                    >
+                      {link.label}
+                    </a>
+
+                    {sub && (
+                      <button
+                        onClick={() => toggleSub(link.label)}
+                        aria-label={isExpanded ? 'Сховати підрозділи' : 'Показати підрозділи'}
+                        aria-expanded={isExpanded}
+                        /* p-3 = 12px padding → effective tap target ≥ 44px */
+                        className="p-3 -mr-3 text-accent inline-flex items-center justify-center"
+                      >
+                        <motion.span
+                          animate={{ rotate: isExpanded ? 180 : 0 }}
+                          transition={{ duration: 0.2, ease: 'easeInOut' }}
+                          style={{ display: 'inline-flex' }}
                         >
-                          {s.label}
-                        </a>
-                      ))}
+                          <ChevronDown size={20} />
+                        </motion.span>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Chip row — CSS grid 0fr→1fr for smooth height-to-auto */}
+                  {sub && (
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateRows: isExpanded ? '1fr' : '0fr',
+                        opacity: isExpanded ? 1 : 0,
+                        transition:
+                          'grid-template-rows 0.2s ease-in-out, opacity 0.15s ease-in-out',
+                      }}
+                    >
+                      <div style={{ overflow: 'hidden' }}>
+                        <div className="flex flex-wrap justify-center gap-2 max-w-[300px] pt-3 pb-1">
+                          {sub.map(s => (
+                            <a
+                              key={s.label}
+                              href={s.href}
+                              onClick={closeMenu}
+                              className="font-body text-sm text-accent border border-accent rounded-full px-4 min-h-[44px] inline-flex items-center hover:bg-accent hover:text-white active:bg-accent active:text-white transition-colors"
+                            >
+                              {s.label}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
               );
             })}
+
             <a
               href="#membership"
-              onClick={() => setMenuOpen(false)}
+              onClick={closeMenu}
               className="font-display text-lg bg-accent text-white px-8 py-4 hover:bg-pink-700 transition-colors mt-2"
             >
               ПЕРШЕ ТРЕНУВАННЯ −50%
