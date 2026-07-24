@@ -1,33 +1,48 @@
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { Quote, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 
-const testimonials = [
+// ⚑ ACTION REQUIRED: Replace this URL with the real Google Business reviews share link
+// (from the club's Google Maps profile → Share → Copy link → Reviews tab)
+const GOOGLE_REVIEWS_URL = 'https://g.page/r/PLACEHOLDER/review';
+
+const reviews = [
   {
-    text: 'Ходжу на Флай Йогу вже 3 місяці — хребет більше не болить, а гнучкість неймовірна. Жанна — чудовий тренер!',
-    name: 'Оксана К.',
-    program: 'Флай Йога',
+    name: 'Люба Боровська',
+    text: 'Пройшла курс вісцерального масажу у Сергія. Результати мене дуже потішили. Сьогодні на заняттях з флай йоги мені було набагато легше займатися. Додала ще ранкову зарядку. Великі зміни почалися. Масаж був дуже приємний і безболісний. Сергій дуже дякую 🙏 🥰 Рекомендую 😘',
   },
   {
-    text: 'Тренажерний зал на Зеленій — мій другий дім. Обладнання сучасне, атмосфера домашня, тренери уважні.',
-    name: 'Андрій М.',
-    program: 'Тренажерний зал',
+    name: 'J s',
+    text: 'Чудове місце з душею. Обладнання та музика на висоті. Роздягальні та шафки утримуються в чистоті. Я дуже рекомендую цей спортзал.',
   },
   {
-    text: 'Записалась на HIIT після народження дитини — через 2 місяці повністю відновилась. Дякую команді Forever!',
-    name: 'Наталія В.',
-    program: 'HIIT',
+    name: 'Катя Латнер',
+    text: 'Ходжу на джампінг. Це просто кайф. Дуже гарний тренер Оля. Дуже ефективні тренування. Після них як нове тіло.',
+  },
+  {
+    name: 'Валерий Потапов',
+    text: 'Атмосферний фітнес клуб в оригінальному стилі фабричний лофт. Прекрасний вид з вікон на старе місто. Люблю ранкові тренування в цьому залі. Рекомендую!',
   },
 ];
 
 const container: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.15 } },
+  show: { transition: { staggerChildren: 0.12 } },
 };
 const item: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 };
+
+function Stars() {
+  return (
+    <div className="flex gap-0.5 mb-4">
+      {[...Array(5)].map((_, i) => (
+        <Star key={i} size={16} className="text-yellow-400 fill-yellow-400" />
+      ))}
+    </div>
+  );
+}
 
 export default function Testimonials() {
   return (
@@ -37,10 +52,10 @@ export default function Testimonials() {
           className="font-display text-center text-zinc-900 dark:text-white mb-2"
           style={{ fontSize: 'clamp(32px, 5vw, 56px)' }}
         >
-          ВАШ РЕЗУЛЬТАТ
+          ВІДГУКИ
         </h2>
         <p className="font-body font-light text-center text-zinc-500 mb-12">
-          Що кажуть наші учасники
+          Що кажуть наші клієнти
         </p>
 
         <motion.div
@@ -48,32 +63,35 @@ export default function Testimonials() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {testimonials.map(t => (
+          {reviews.map(r => (
             <motion.div
-              key={t.name}
+              key={r.name}
               variants={item}
-              className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 p-8"
+              className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 p-8 flex flex-col min-h-[180px]"
             >
-              <Quote size={24} className="text-accent/40" />
-              <p className="font-body font-light text-base text-zinc-700 dark:text-zinc-300 leading-relaxed mt-4">
-                {t.text}
+              <Stars />
+              <p className="font-body font-light text-base text-zinc-700 dark:text-zinc-300 leading-relaxed flex-1">
+                {r.text}
               </p>
-              <div className="mt-6 border-t border-zinc-100 dark:border-zinc-700 pt-4">
-                <p className="font-body text-sm text-zinc-900 dark:text-white">{t.name}</p>
-                <p className="font-body font-light text-xs text-accent">{t.program}</p>
+              <div className="mt-6 border-t border-zinc-100 dark:border-zinc-700 pt-4 flex items-center justify-between">
+                <p className="font-body text-sm font-medium text-zinc-900 dark:text-white">{r.name}</p>
+                <span className="font-body text-xs text-zinc-400 dark:text-zinc-500">Google</span>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Google rating */}
-        <div className="flex items-center gap-2 justify-center mt-8">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={18} className="text-yellow-400 fill-yellow-400" />
-          ))}
-          <span className="font-body text-zinc-900 dark:text-white ml-2">4.9 · 120+ відгуків на Google</span>
+        <div className="flex justify-center mt-10">
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-display text-sm tracking-widest text-accent border-b-2 border-accent pb-0.5 hover:text-pink-700 hover:border-pink-700 transition-colors"
+          >
+            ВСІ ВІДГУКИ В GOOGLE →
+          </a>
         </div>
       </div>
     </section>

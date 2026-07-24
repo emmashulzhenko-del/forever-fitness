@@ -39,7 +39,7 @@ const services = [
     photoAlt: 'Масаж і кінезіотерапія у Forever',
     links: [
       { label: 'Ціни', href: '#massage' },
-      { label: 'Записатись на масаж', href: 'tel:+380671496930' },
+      { label: 'Записатись на масаж', href: 'tel:+380737781008' },
     ],
   },
 ]

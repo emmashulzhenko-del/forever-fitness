@@ -50,7 +50,7 @@ export default function Massage() {
             </div>
 
             <a
-              href="tel:+380671496930"
+              href="tel:+380737781008"
               className="inline-block bg-accent text-white font-display text-base px-8 py-4 mt-8 hover:bg-pink-700 transition-colors duration-200"
             >
               ЗАПИСАТИСЬ НА МАСАЖ

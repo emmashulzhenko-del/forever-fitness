@@ -11,19 +11,19 @@ export default function HelpChatCTA() {
           Ми допоможемо підібрати коректну програму під твої цілі. Напиши нам у зручному месенджері — відповідаємо за 10–15 хвилин.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <a href="https://wa.me/380671496930" target="_blank" rel="noopener"
+          <a href="https://wa.me/380737781008" target="_blank" rel="noopener"
              className="font-display font-semibold text-base px-6 py-3 bg-white text-accent hover:bg-zinc-100 transition flex items-center gap-2">
             <MessageCircle className="w-4 h-4" /> WhatsApp
           </a>
-          <a href="viber://chat?number=%2B380671496930"
+          <a href="viber://chat?number=%2B380737781008"
              className="font-display font-semibold text-base px-6 py-3 bg-white text-accent hover:bg-zinc-100 transition flex items-center gap-2">
             <MessageCircle className="w-4 h-4" /> Viber
           </a>
-          <a href="https://t.me/+380671496930" target="_blank" rel="noopener"
+          <a href="https://t.me/+380737781008" target="_blank" rel="noopener"
              className="font-display font-semibold text-base px-6 py-3 bg-white text-accent hover:bg-zinc-100 transition flex items-center gap-2">
             <MessageCircle className="w-4 h-4" /> Telegram
           </a>
-          <a href="tel:+380671496930"
+          <a href="tel:+380737781008"
              className="font-display font-semibold text-base px-6 py-3 border-2 border-white text-white hover:bg-white hover:text-accent transition flex items-center gap-2">
             <Phone className="w-4 h-4" /> Подзвонити
           </a>

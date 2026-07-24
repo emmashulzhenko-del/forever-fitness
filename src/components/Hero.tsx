@@ -108,11 +108,11 @@ export default function Hero() {
                style={{ border: '1.5px solid rgba(255,255,255,0.45)' }}>
               РОЗКЛАД
             </a>
-            <a href="tel:+380671496930"
+            <a href="tel:+380737781008"
                className="font-display font-medium text-[18px] tracking-[0.02em] text-white px-6 py-4 whitespace-nowrap transition-all duration-200 hover:bg-white/10 inline-flex items-center gap-2"
                style={{ border: '1.5px solid rgba(255,255,255,0.45)' }}>
               <Phone className="w-4 h-4" />
-              067 149 69 30
+              073 778 10 08
             </a>
           </motion.div>
 
@@ -196,11 +196,11 @@ export default function Hero() {
                style={{ border: '1.5px solid rgba(255,255,255,0.45)' }}>
               РОЗКЛАД
             </a>
-            <a href="tel:+380671496930"
+            <a href="tel:+380737781008"
                className="font-display font-medium text-[18px] tracking-[0.02em] text-white px-6 py-4 whitespace-nowrap transition-all duration-200 hover:bg-white/10 inline-flex items-center gap-2"
                style={{ border: '1.5px solid rgba(255,255,255,0.45)' }}>
               <Phone className="w-4 h-4" />
-              067 149 69 30
+              073 778 10 08
             </a>
           </motion.div>
         </div>

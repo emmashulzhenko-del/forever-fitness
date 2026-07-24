@@ -27,13 +27,13 @@ export default function CTABanner() {
         </p>
         <div className="flex justify-center gap-4 mt-10 flex-wrap">
           <a
-            href="tel:+380671496930"
+            href="tel:+380737781008"
             className="bg-white text-accent font-display text-xl px-12 py-5 hover:bg-zinc-100 hover:scale-[1.02] transition-all duration-200"
           >
             ЗАПИСАТИСЬ ЗАРАЗ
           </a>
           <a
-            href="tel:+380671496930"
+            href="tel:+380737781008"
             className="border-2 border-white text-white font-display text-xl px-12 py-5 hover:bg-white hover:text-accent transition-colors duration-200"
           >
             ЗАТЕЛЕФОНУВАТИ

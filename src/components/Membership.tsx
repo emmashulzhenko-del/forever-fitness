@@ -212,9 +212,9 @@ export default function Membership() {
                   </tbody>
                 </table>
                 <p className="font-body text-sm text-zinc-500 dark:text-zinc-400 mt-6">
-                  Питання? Зателефонуйте: +38 (067) 149 69 30
+                  Питання? Зателефонуйте: +38 (073) 778 10 08
                 </p>
-                <a href="tel:+380671496930"
+                <a href="tel:+380737781008"
                    className="inline-block mt-4 font-display font-semibold text-base bg-accent text-white px-8 py-3 hover:bg-pink-700 transition">
                   ЗАТЕЛЕФОНУВАТИ
                 </a>
@@ -270,7 +270,7 @@ export default function Membership() {
             <p className="font-display text-2xl text-white">ПЕРШЕ ТРЕНУВАННЯ ЗІ ЗНИЖКОЮ 50%</p>
             <p className="font-body font-light text-white/80 mt-2">Запишіться зараз — отримайте знижку на перший візит</p>
             <a
-              href="tel:+380671496930"
+              href="tel:+380737781008"
               className="inline-block bg-white text-accent font-display text-lg px-10 py-4 mt-4 hover:bg-zinc-100 transition-colors duration-200"
             >
               ЗАПИСАТИСЬ ЗАРАЗ

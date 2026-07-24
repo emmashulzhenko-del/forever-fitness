@@ -25,7 +25,7 @@ export default function MobileSticky() {
           ДОПОМОГА У ВИБОРІ
         </a>
         {/* Button 3 — Call */}
-        <a href="tel:+380671496930"
+        <a href="tel:+380737781008"
            className="w-11 h-11 flex items-center justify-center border-2 border-accent text-accent shrink-0"
            aria-label="Зателефонувати">
           <Phone className="w-4 h-4" />

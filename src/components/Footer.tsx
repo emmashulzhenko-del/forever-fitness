@@ -4,7 +4,7 @@ const navLinks = ['Головна', 'Тренери', 'Розклад', 'Або�
 
 const contacts = [
   { icon: MapPin, text: 'м. Львів, вул. Зелена, 20' },
-  { icon: Phone, text: '+38 (067) 149 69 30' },
+  { icon: Phone, text: '+38 (073) 778 10 08' },
   { icon: Mail, text: 'fitness_forever@ukr.net' },
   { icon: Clock, text: 'Пн–Сб: 8:00–21:00' },
 ];
