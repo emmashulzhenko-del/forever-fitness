@@ -4,8 +4,8 @@ import ModalOverlay from './ModalOverlay'
 
 const groups = [
   { name: 'HIIT', icon: Flame, desc: 'Високоінтенсивне інтервальне тренування. Приріст метаболізму, мінус зайві кілограми і об\'єми.', photo: '/programs/hiit.webp' },
-  { name: 'TRX (Струнка фігура)', icon: Anchor, desc: 'Комплексне функціональне тренування з TRX-петлями. Для бездоганної фігури.', photo: '/programs/trx.webp' },
   { name: 'ТАБАТА', icon: Timer, desc: 'Інтервальне тренування 20/10. Максимальне навантаження за мінімум часу.', photo: '/programs/tabata.webp' },
+  { name: 'TRX (Струнка фігура)', icon: Anchor, desc: 'Комплексне функціональне тренування з TRX-петлями. Для бездоганної фігури.', photo: '/programs/trx.webp' },
   { name: 'ДЖАМПІНГ', icon: Rabbit, desc: 'Потужне кардіо, без одноманітних рухів. Стрибкова аеробіка на батутах.', photo: '/programs/jumping.webp' },
   { name: 'ФЛАЙ ЙОГА', icon: Wind, desc: 'Декомпресійна Йога Терапія. Коректне підсилення "м\'язового корсету", розвиток гнучкості.', photo: '/programs/fly-yoga.webp' },
   { name: 'ЙОГА', icon: Flower2, desc: 'Класичні практики для зміцнення і гармонії тіла і духу, зцілення нервової системи через дихання — Пранаями.', photo: '/programs/hatha-yoga.webp' },

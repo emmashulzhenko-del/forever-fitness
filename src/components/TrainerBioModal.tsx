@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 export interface TrainerForModal {
   name: string;
   specialty: string;
+  specialtyFull?: string;
   exp: string;
   photo: string;
   bio?: string;
@@ -71,7 +72,7 @@ export default function TrainerBioModal({ trainer, onClose, onBook }: Props) {
               </div>
 
               <p className="font-body text-[11px] tracking-[0.14em] text-accent uppercase mb-2">
-                {trainer.specialty}
+                {trainer.specialtyFull ?? trainer.specialty}
               </p>
               <h2 className="font-display text-3xl text-white mb-1">{trainer.name}</h2>
               <p className="font-body text-sm text-white/55 mb-6">{trainer.exp}</p>
