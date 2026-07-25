@@ -45,19 +45,23 @@
   </head>
   <body>
     <!-- Netlify Forms — required hidden declarations for build detection -->
-    <form name="trainer-booking" netlify netlify-honeypot="bot-field" hidden>
+    <form name="trainer-booking" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
       <input type="text" name="firstName" />
       <input type="text" name="lastName" />
       <input type="tel" name="phone" />
       <input type="text" name="day" />
       <input type="text" name="time" />
       <input type="text" name="trainer" />
+      <input type="text" name="source" />
     </form>
-    <form name="class-booking" netlify netlify-honeypot="bot-field" hidden>
+    <form name="class-booking" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
       <input type="text" name="name" />
       <input type="tel" name="phone" />
       <input type="text" name="class" />
       <input type="date" name="date" />
+      <input type="text" name="source" />
     </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

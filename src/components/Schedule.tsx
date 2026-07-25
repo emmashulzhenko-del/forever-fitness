@@ -45,6 +45,26 @@ const gymCards: GymCard[] = [
 
 export default function Schedule() {
   const [tab, setTab] = useState<'fitness' | 'gym'>('gym');
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleClassSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    const body = new URLSearchParams(new FormData(e.currentTarget) as unknown as Record<string, string>).toString();
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setFormStatus('success');
+      (e.target as HTMLFormElement).reset();
+    } catch (err) {
+      setFormStatus('error');
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     const applyHash = () => {
@@ -199,38 +219,55 @@ export default function Schedule() {
             <h3 className="font-display text-2xl text-zinc-900 dark:text-white mb-1">ЗАПИСАТИСЬ НА ЗАНЯТТЯ</h3>
             <p className="font-body text-sm text-zinc-500 mb-6">Заповніть форму — ми підтвердимо запис за 10–15 хвилин</p>
 
-            <form name="class-booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" className="space-y-4">
-              <input type="hidden" name="form-name" value="class-booking" />
-              <p className="hidden"><label>Don't fill: <input name="bot-field" /></label></p>
+            {formStatus === 'success' ? (
+              <p className="font-body text-sm text-zinc-700 dark:text-zinc-300 py-8 text-center leading-relaxed">
+                Дякуємо! Ми зв'яжемось з вами протягом години.
+              </p>
+            ) : (
+              <form onSubmit={handleClassSubmit} className="space-y-4">
+                <input type="hidden" name="form-name" value="class-booking" />
+                <input type="hidden" name="source" value="Заняття" />
+                <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-              <input type="text" name="name" required placeholder="Ваше ім'я"
-                     className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
-              <input type="tel" name="phone" required placeholder="+380 67 123 45 67"
-                     className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
-              <select name="class" required defaultValue=""
-                      className="w-full min-w-0 max-w-full appearance-none px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm">
-                <option value="" disabled>Оберіть заняття</option>
-                <option value="Персональне тренування">Персональне тренування</option>
-                <option value="Черговий тренер">Черговий тренер</option>
-                <option value="Самостійно в тренажерному залі">Самостійно в тренажерному залі</option>
-                <option value="Табата">Табата</option>
-                <option value="Йога">Йога</option>
-                <option value="Флай Йога">Флай Йога</option>
-                <option value="Джампінг">Джампінг</option>
-                <option value="HIIT">HIIT</option>
-                <option value="TRX">TRX</option>
-                <option value="Стретчинг">Стретчинг</option>
-                <option value="FitMama">FitMama</option>
-                <option value="Кінезіотерапія">Кінезіотерапія</option>
-                <option value="Масаж">Масаж</option>
-              </select>
-              <input type="date" name="date" required
-                     className="w-full min-w-0 max-w-full appearance-none px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm"
-                     style={{ WebkitAppearance: 'none', minHeight: '48px' }} />
-              <button type="submit" className="w-full font-display font-semibold text-base bg-accent text-white py-4 hover:bg-pink-700 transition">
-                ЗАПИСАТИСЬ НА ЗАНЯТТЯ
-              </button>
-            </form>
+                <input type="text" name="name" required placeholder="Ваше ім'я"
+                       className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
+                <input type="tel" name="phone" required placeholder="+380 67 123 45 67"
+                       className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
+                <select name="class" required defaultValue=""
+                        className="w-full min-w-0 max-w-full appearance-none px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm">
+                  <option value="" disabled>Оберіть заняття</option>
+                  <option value="Персональне тренування">Персональне тренування</option>
+                  <option value="Черговий тренер">Черговий тренер</option>
+                  <option value="Самостійно в тренажерному залі">Самостійно в тренажерному залі</option>
+                  <option value="Табата">Табата</option>
+                  <option value="Йога">Йога</option>
+                  <option value="Флай Йога">Флай Йога</option>
+                  <option value="Джампінг">Джампінг</option>
+                  <option value="HIIT">HIIT</option>
+                  <option value="TRX">TRX</option>
+                  <option value="Стретчинг">Стретчинг</option>
+                  <option value="FitMama">FitMama</option>
+                  <option value="Кінезіотерапія">Кінезіотерапія</option>
+                  <option value="Масаж">Масаж</option>
+                </select>
+                <input type="date" name="date" required
+                       className="w-full min-w-0 max-w-full appearance-none px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm"
+                       style={{ WebkitAppearance: 'none', minHeight: '48px' }} />
+                <button
+                  type="submit"
+                  disabled={formStatus === 'sending'}
+                  className="w-full font-display font-semibold text-base bg-accent text-white py-4 hover:bg-pink-700 transition disabled:opacity-60"
+                >
+                  {formStatus === 'sending' ? 'Надсилаємо…' : 'ЗАПИСАТИСЬ НА ЗАНЯТТЯ'}
+                </button>
+                {formStatus === 'error' && (
+                  <p className="text-xs text-red-500 text-center font-body">
+                    Щось пішло не так. Зателефонуйте нам:{' '}
+                    <a href="tel:+380737781008" className="underline">+380 73 778 10 08</a>
+                  </p>
+                )}
+              </form>
+            )}
           </div>
         </motion.div>
       </div>

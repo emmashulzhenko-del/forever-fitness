@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -7,6 +8,30 @@ interface Props {
 }
 
 export default function TrainerBookingModal({ trainer, onClose }: Props) {
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+
+  useEffect(() => {
+    if (trainer) setStatus('idle')
+  }, [trainer])
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setStatus('sending')
+    const body = new URLSearchParams(new FormData(e.currentTarget) as unknown as Record<string, string>).toString()
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      setStatus('success')
+    } catch (err) {
+      setStatus('error')
+      console.error(err)
+    }
+  }
+
   return (
     <AnimatePresence>
       {trainer && (
@@ -33,39 +58,49 @@ export default function TrainerBookingModal({ trainer, onClose }: Props) {
               </p>
             )}
 
-            <form
-              name="trainer-booking"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
-              className="space-y-4"
-            >
-              <input type="hidden" name="form-name" value="trainer-booking" />
-              <input type="hidden" name="trainer" value={trainer.name} />
-              <p className="hidden">
-                <label>Don't fill this: <input name="bot-field" /></label>
+            {status === 'success' ? (
+              <p className="font-body text-sm text-zinc-700 dark:text-zinc-300 py-8 text-center leading-relaxed">
+                Дякуємо! Ми зв'яжемось з вами протягом години.
               </p>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input type="hidden" name="form-name" value="trainer-booking" />
+                <input type="hidden" name="trainer" value={trainer.name} />
+                <input type="hidden" name="source" value={`Тренер: ${trainer.name}`} />
+                <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-              <div className="grid grid-cols-2 gap-3">
-                <input type="text" name="firstName" required placeholder="Ім'я"
+                <div className="grid grid-cols-2 gap-3">
+                  <input type="text" name="firstName" required placeholder="Ім'я"
+                         className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
+                  <input type="text" name="lastName" required placeholder="Прізвище"
+                         className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
+                </div>
+                <input type="tel" name="phone" required placeholder="+380 67 123 45 67"
                        className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
-                <input type="text" name="lastName" required placeholder="Прізвище"
+                <input type="text" name="day" required placeholder="Бажаний день тижня"
                        className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
-              </div>
-              <input type="tel" name="phone" required placeholder="+380 67 123 45 67"
-                     className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
-              <input type="text" name="day" required placeholder="Бажаний день тижня"
-                     className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
-              <input type="text" name="time" required placeholder="Бажана година (напр. 18:00)"
-                     className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
-              <button type="submit"
-                      className="w-full font-display font-semibold text-base bg-accent text-white py-4 hover:bg-pink-700 transition">
-                ЗАПИСАТИСЬ
-              </button>
-              <p className="text-xs text-zinc-500 text-center font-body">
-                Ми зв'яжемось протягом години
-              </p>
-            </form>
+                <input type="text" name="time" required placeholder="Бажана година (напр. 18:00)"
+                       className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />
+
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="w-full font-display font-semibold text-base bg-accent text-white py-4 hover:bg-pink-700 transition disabled:opacity-60"
+                >
+                  {status === 'sending' ? 'Надсилаємо…' : 'ЗАПИСАТИСЬ'}
+                </button>
+
+                {status === 'error' && (
+                  <p className="text-xs text-red-500 text-center font-body">
+                    Щось пішло не так. Зателефонуйте нам:{' '}
+                    <a href="tel:+380737781008" className="underline">+380 73 778 10 08</a>
+                  </p>
+                )}
+                <p className="text-xs text-zinc-500 text-center font-body">
+                  Ми зв'яжемось протягом години
+                </p>
+              </form>
+            )}
           </motion.div>
         </motion.div>
       )}
