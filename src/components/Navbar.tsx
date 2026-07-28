@@ -19,12 +19,13 @@ const links = [
     ],
   },
   {
-    label: 'Абонементи', href: '#membership',
+    label: 'Абонементи', href: '/abonementy',
     sub: [
-      { label: 'Тренажерний зал', href: '#membership-gym' },
-      { label: 'Фітнес+', href: '#membership-fitness' },
-      { label: 'GYM + Mobility', href: '#membership-gym-mobility' },
-      { label: 'Персональні', href: '#membership-personal' },
+      { label: 'Тренажерний зал', href: '/abonementy#gym' },
+      { label: 'Фітнес+', href: '/abonementy#fp' },
+      { label: 'GYM + Mobility', href: '/abonementy#gym-mobility' },
+      { label: 'Персональні', href: '/abonementy#personal' },
+      { label: 'Масаж', href: '/abonementy#massage' },
     ],
   },
   { label: 'Контакти', href: '#footer' },
@@ -115,7 +116,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
         <div className="flex items-center gap-2 ml-auto md:ml-0">
           <ThemeToggle dark={dark} onToggle={onToggleTheme} />
           <a
-            href="#membership"
+            href="/abonementy"
             className="hidden lg:inline-flex items-center font-display text-base bg-accent text-white px-5 py-2.5 hover:bg-pink-700 transition-colors duration-200"
           >
             Перше тренування −50%
@@ -207,7 +208,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
             })}
 
             <a
-              href="#membership"
+              href="/abonementy"
               onClick={closeMenu}
               className="font-display text-lg bg-accent text-white px-8 py-4 hover:bg-pink-700 transition-colors mt-2"
             >

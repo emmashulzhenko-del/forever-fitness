@@ -13,7 +13,7 @@ const navHrefs: Record<string, string> = {
   'Головна': '#',
   'Тренери': '#trainers',
   'Розклад': '#schedule',
-  'Абонементи': '#membership',
+  'Абонементи': '/abonementy',
   'Програми': '#programs',
   'Масаж': '#massage',
   'Контакти': '#footer',
