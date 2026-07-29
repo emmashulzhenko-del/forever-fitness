@@ -279,11 +279,22 @@ function FpPanel() {
 }
 
 // ─── GYM PANEL ────────────────────────────────────────────────────────────────
+const GYM_DURATIONS = [
+  { key: 'razove', label: 'Разове' },
+  { key: '1m',     label: '1 міс' },
+  { key: '3m',     label: '3 міс' },
+  { key: '6m',     label: '6 міс' },
+  { key: '12m',    label: '12 міс' },
+] as const;
+type GymDur = (typeof GYM_DURATIONS)[number]['key'];
+
 const GYM_GROUPS: readonly {
+  durKey: GymDur;
   label: string;
   items: readonly { id: string; name: string; periodLabel?: string }[];
 }[] = [
   {
+    durKey: 'razove',
     label: 'Разове відвідування',
     items: [
       { id: 'gym-razove-early', name: '08:00–15:00' },
@@ -291,6 +302,7 @@ const GYM_GROUPS: readonly {
     ],
   },
   {
+    durKey: '1m',
     label: '1 місяць',
     items: [
       { id: 'gym-1m-early', name: '08:00–15:00', periodLabel: '1 місяць' },
@@ -298,6 +310,7 @@ const GYM_GROUPS: readonly {
     ],
   },
   {
+    durKey: '3m',
     label: '3 місяці',
     items: [
       { id: 'gym-3m-early', name: '08:00–15:00', periodLabel: '3 місяці' },
@@ -305,6 +318,7 @@ const GYM_GROUPS: readonly {
     ],
   },
   {
+    durKey: '6m',
     label: '6 місяців',
     items: [
       { id: 'gym-6m-early', name: '08:00–15:00', periodLabel: '6 місяців' },
@@ -312,6 +326,7 @@ const GYM_GROUPS: readonly {
     ],
   },
   {
+    durKey: '12m',
     label: '12 місяців',
     items: [
       { id: 'gym-12m-early', name: '08:00–15:00', periodLabel: '12 місяців' },
@@ -322,7 +337,7 @@ const GYM_GROUPS: readonly {
 
 const GYM_RECOMMENDED = 'gym-1m-full';
 
-function gymDetails(entry: PaymentEntry): string[] {
+function gymDetails(entry: PaymentEntry, periodLabel?: string): string[] {
   const isRazove = entry.id.includes('razove');
   const slot = entry.sub ?? '';
   if (isRazove) {
@@ -330,68 +345,73 @@ function gymDetails(entry: PaymentEntry): string[] {
   }
   return [
     'Безліміт відвідувань',
-    `Термін: ${entry.name}`,
+    periodLabel ? `Термін: ${periodLabel}` : `Термін: ${entry.name}`,
     `Час роботи: ${slot}`,
     'Тренажерний зал + Кросфіт + TRX',
   ];
 }
 
 function GymPanel() {
+  const [dur, setDur] = useState<GymDur>('1m');
   const byId = Object.fromEntries(payments.map(e => [e.id, e]));
+  const group = GYM_GROUPS.find(g => g.durKey === dur)!;
   return (
-    <div>
-      {GYM_GROUPS.map(group => (
-        <PanelGroup key={group.label} label={group.label}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
-            {group.items.map(item => {
-              const entry = byId[item.id];
-              const savings = computeSavings(entry);
-              return (
-                <PricingCard
-                  key={item.id}
-                  name={item.name}
-                  price={entry.priceUAH}
-                  periodLabel={item.periodLabel}
-                  savings={savings}
-                  details={gymDetails(entry)}
-                  recommended={item.id === GYM_RECOMMENDED}
-                  entry={entry}
-                />
-              );
-            })}
-          </div>
-        </PanelGroup>
-      ))}
-      <p className="font-body text-xs text-zinc-400 dark:text-zinc-500 mt-2 leading-relaxed">
+    <>
+      <SubToggle options={GYM_DURATIONS} active={dur} onChange={setDur} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+        {group.items.map(item => {
+          const entry = byId[item.id];
+          const savings = computeSavings(entry);
+          return (
+            <PricingCard
+              key={item.id}
+              name={item.name}
+              price={entry.priceUAH}
+              periodLabel={item.periodLabel}
+              savings={savings}
+              details={gymDetails(entry, item.periodLabel)}
+              recommended={item.id === GYM_RECOMMENDED}
+              entry={entry}
+            />
+          );
+        })}
+      </div>
+      <p className="font-body text-xs text-zinc-400 dark:text-zinc-500 mt-5 leading-relaxed">
         Безліміт — необмежена кількість відвідувань протягом дії абонементу.
         Економія — відносно щомісячної оплати.
       </p>
-    </div>
+    </>
   );
 }
 
 // ─── PERSONAL PANEL ───────────────────────────────────────────────────────────
+const PERSONAL_TYPES = [
+  { key: 'gym', label: 'Тренажерний зал' },
+  { key: 'str', label: 'Стретчинг' },
+] as const;
+type PersonalType = (typeof PERSONAL_TYPES)[number]['key'];
+
 const PERSONAL_GROUPS: readonly {
+  type: PersonalType;
   label: string;
   ids: readonly string[];
   recommendedId: string;
-  type: 'gym' | 'str';
 }[] = [
   {
+    type: 'gym',
     label: 'Тренажерний зал',
     ids: ['pt-gym-razove', 'pt-gym-6', 'pt-gym-8', 'pt-gym-12'],
     recommendedId: 'pt-gym-12',
-    type: 'gym',
   },
   {
+    type: 'str',
     label: 'Стретчинг · Мобіліті · Пілатес',
     ids: ['pt-str-razove', 'pt-str-6', 'pt-str-8', 'pt-str-12'],
     recommendedId: 'pt-str-12',
-    type: 'str',
   },
 ] as const;
 
-function personalDetails(entry: PaymentEntry, type: 'gym' | 'str'): string[] {
+function personalDetails(entry: PaymentEntry, type: PersonalType): string[] {
   const sub = entry.sub ?? '';
   const location = type === 'gym' ? 'Тренажерний зал' : 'Стретчинг, Мобіліті, Пілатес';
   const isRazove = entry.id.includes('razove');
@@ -409,34 +429,35 @@ function personalDetails(entry: PaymentEntry, type: 'gym' | 'str'): string[] {
 }
 
 function PersonalPanel() {
+  const [type, setType] = useState<PersonalType>('gym');
   const byId = Object.fromEntries(payments.map(e => [e.id, e]));
+  const group = PERSONAL_GROUPS.find(g => g.type === type)!;
   return (
-    <div>
-      {PERSONAL_GROUPS.map(group => (
-        <PanelGroup key={group.label} label={group.label}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
-            {group.ids.map(id => {
-              const entry = byId[id];
-              const savings = computeSavings(entry);
-              return (
-                <PricingCard
-                  key={id}
-                  name={entry.sub ?? entry.name}
-                  price={entry.priceUAH}
-                  savings={savings}
-                  details={personalDetails(entry, group.type)}
-                  recommended={id === group.recommendedId}
-                  entry={entry}
-                />
-              );
-            })}
-          </div>
-        </PanelGroup>
-      ))}
+    <>
+      <SubToggle options={PERSONAL_TYPES} active={type} onChange={setType} />
+      <PanelGroup label={group.label}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
+          {group.ids.map(id => {
+            const entry = byId[id];
+            const savings = computeSavings(entry);
+            return (
+              <PricingCard
+                key={id}
+                name={entry.sub ?? entry.name}
+                price={entry.priceUAH}
+                savings={savings}
+                details={personalDetails(entry, group.type)}
+                recommended={id === group.recommendedId}
+                entry={entry}
+              />
+            );
+          })}
+        </div>
+      </PanelGroup>
       <p className="font-body text-xs text-zinc-400 dark:text-zinc-500 mt-2">
         При першому тренуванні — знижка 50%. Економія — відносно разового відвідування.
       </p>
-    </div>
+    </>
   );
 }
 
@@ -584,7 +605,24 @@ export default function Abonementy() {
     <div className="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen">
       <Navbar dark={dark} onToggleTheme={toggle} />
 
-      {/* Sticky category tab bar */}
+      {/* Page header — eyebrow → title → subline (not sticky) */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-12 pb-8">
+        <p className="font-body text-xs text-accent uppercase tracking-[0.15em] mb-3">
+          Оплата онлайн
+        </p>
+        <h1
+          className="font-display text-zinc-900 dark:text-white uppercase"
+          style={{ fontSize: 'clamp(28px, 5vw, 56px)' }}
+        >
+          АБОНЕМЕНТИ
+        </h1>
+        <p className="font-body font-light text-zinc-500 dark:text-zinc-400 mt-3 max-w-xl leading-relaxed">
+          Обери напрямок і знайди свій формат. Оплата через monobank — карткою, Apple Pay або
+          Google Pay. Після оплати збережіть квитанцію та пред'явіть на рецепції.
+        </p>
+      </div>
+
+      {/* Sticky category tab bar — sits below the header text on scroll */}
       <nav className="sticky top-[68px] z-30 bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex gap-0">
           {TABS.map(t => (
@@ -604,23 +642,6 @@ export default function Abonementy() {
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 md:px-8 pb-24 md:pb-16">
-        {/* Page header */}
-        <div className="pt-12 pb-8 border-b border-zinc-200 dark:border-zinc-800">
-          <p className="font-body text-xs text-accent uppercase tracking-[0.15em] mb-3">
-            Оплата онлайн
-          </p>
-          <h1
-            className="font-display text-zinc-900 dark:text-white uppercase"
-            style={{ fontSize: 'clamp(28px, 5vw, 56px)' }}
-          >
-            АБОНЕМЕНТИ
-          </h1>
-          <p className="font-body font-light text-zinc-500 dark:text-zinc-400 mt-3 max-w-xl leading-relaxed">
-            Обери напрямок і знайди свій формат. Оплата через monobank — карткою, Apple Pay або
-            Google Pay. Після оплати збережіть квитанцію та пред'явіть на рецепції.
-          </p>
-        </div>
-
         {/* Animated panel */}
         <AnimatePresence mode="wait">
           <motion.div

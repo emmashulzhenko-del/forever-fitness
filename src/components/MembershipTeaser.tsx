@@ -1,4 +1,4 @@
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { payments, fmtPrice } from '../data/payments';
 
@@ -25,6 +25,7 @@ type TeaserCard = {
   sub: string;
   price: number | null;
   savings: number;
+  details: string[];
   url: string | null;
   href: string | null;
   recommended: boolean;
@@ -34,9 +35,15 @@ const POPULAR: TeaserCard[] = [
   {
     id: 'fp-1m-12',
     title: 'Фітнес+',
-    sub: '12 занять · 1 місяць',
+    sub: '12 тренувань · 1 місяць',
     price: fp.priceUAH,
     savings: savingsPct(fp.priceUAH, 12 * 400),
+    details: [
+      '12 групових занять',
+      'Термін дії: 1 місяць',
+      'Всі програми клубу',
+      'HIIT, Йога, Джампінг, Табата',
+    ],
     url: fp.url ?? null,
     href: null,
     recommended: true,
@@ -47,6 +54,12 @@ const POPULAR: TeaserCard[] = [
     sub: '1 місяць · 08:00–21:00',
     price: gym.priceUAH,
     savings: 0,
+    details: [
+      'Безлімітний доступ у зал',
+      'Термін дії: 1 місяць',
+      '3 зони (лофт, Cross Fire, кардіо)',
+      'Час роботи: 08:00–21:00',
+    ],
     url: gym.url ?? null,
     href: null,
     recommended: false,
@@ -57,6 +70,12 @@ const POPULAR: TeaserCard[] = [
     sub: 'Пакет 6 занять · Тренажерний зал',
     price: pt.priceUAH,
     savings: savingsPct(pt.priceUAH, 6 * 400),
+    details: [
+      '6 персональних тренувань',
+      'Індивідуальна програма',
+      'Робота з тренером',
+      'Тренажерний зал',
+    ],
     url: pt.url ?? null,
     href: null,
     recommended: false,
@@ -67,6 +86,12 @@ const POPULAR: TeaserCard[] = [
     sub: 'Знижка 50% на перший візит',
     price: null,
     savings: 0,
+    details: [
+      'Знижка 50% на перший візит',
+      'Будь-який напрямок',
+      'Знайомство з клубом',
+      'Без зобов\u2019язань',
+    ],
     url: null,
     href: '#class-booking-form',
     recommended: false,
@@ -94,7 +119,7 @@ export default function MembershipTeaser() {
             Популярні формати — обери свій або перегляньте всі варіанти.
           </p>
 
-          {/* 4 popular cards — same card style as /abonementy */}
+          {/* 4 popular cards — same PricingCard style as /abonementy */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 items-stretch">
             {POPULAR.map(card => (
               <div
@@ -105,7 +130,7 @@ export default function MembershipTeaser() {
                     : 'border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800'
                 }`}
               >
-                {/* Badge row — fixed height so cards align */}
+                {/* Badge row — fixed height so all cards align across the row */}
                 <div className="flex items-start justify-between gap-2 min-h-[22px] mb-3">
                   {card.recommended ? (
                     <span className="font-body text-[9px] uppercase tracking-widest text-white bg-accent px-2 py-0.5 whitespace-nowrap">
@@ -114,19 +139,14 @@ export default function MembershipTeaser() {
                   ) : (
                     <span />
                   )}
-                  {card.savings > 0 && (
+                  {(card.savings > 0 || card.id === 'first50') && (
                     <span className="font-body text-[10px] uppercase tracking-wide text-accent bg-accent/10 px-2 py-0.5 whitespace-nowrap shrink-0">
-                      −{card.savings}%
-                    </span>
-                  )}
-                  {card.id === 'first50' && (
-                    <span className="font-body text-[10px] uppercase tracking-wide text-accent bg-accent/10 px-2 py-0.5 whitespace-nowrap shrink-0">
-                      −50%
+                      {card.id === 'first50' ? '−50%' : `−${card.savings}%`}
                     </span>
                   )}
                 </div>
 
-                {/* Plan name */}
+                {/* Plan name + sub */}
                 <p className="font-display text-base text-zinc-900 dark:text-white uppercase tracking-wide mb-1">
                   {card.title}
                 </p>
@@ -135,11 +155,24 @@ export default function MembershipTeaser() {
                 </p>
 
                 {/* Price */}
-                <p className="font-display text-3xl text-accent leading-none mb-5 flex-1">
+                <p className="font-display text-3xl text-accent leading-none mb-5">
                   {card.id === 'first50' ? '−50%' : card.price != null ? fmtPrice(card.price) : '—'}
                 </p>
 
-                {/* CTA — pinned to bottom */}
+                {/* Feature list — flex-1 so CTA pins to bottom regardless of list length */}
+                <ul className="flex-1 space-y-2 mb-5">
+                  {card.details.map((d, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-2 font-body text-xs text-zinc-500 dark:text-zinc-400"
+                    >
+                      <span className="text-accent shrink-0 mt-px leading-none">✓</span>
+                      <span className="leading-relaxed">{d}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA — pinned to bottom, identical padding for all cards */}
                 <div className="mt-auto">
                   {card.url ? (
                     <a
@@ -153,16 +186,9 @@ export default function MembershipTeaser() {
                   ) : (
                     <a
                       href={card.href ?? '#class-booking-form'}
-                      className="flex items-center justify-center gap-1.5 font-display text-sm border border-accent text-accent text-center py-3 hover:bg-accent hover:text-white transition-colors"
+                      className="block font-display text-sm border border-accent text-accent text-center py-3 hover:bg-accent hover:text-white transition-colors"
                     >
-                      {card.id === 'first50' ? (
-                        'Записатись'
-                      ) : (
-                        <>
-                          <Phone size={13} />
-                          Оплата за телефоном
-                        </>
-                      )}
+                      Записатись
                     </a>
                   )}
                 </div>
@@ -170,7 +196,7 @@ export default function MembershipTeaser() {
             ))}
           </div>
 
-          {/* CTA */}
+          {/* Section CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="/abonementy"

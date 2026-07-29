@@ -9,13 +9,13 @@ interface Props {
 }
 
 const links = [
-  { label: 'Головна', href: '#' },
-  { label: 'Тренери', href: '#trainers' },
+  { label: 'Головна', href: '/' },
+  { label: 'Тренери', href: '/#trainers' },
   {
-    label: 'Розклад', href: '#schedule',
+    label: 'Розклад', href: '/#schedule',
     sub: [
-      { label: 'Тренажерний зал', href: '#schedule-gym' },
-      { label: 'Фітнес-групи', href: '#schedule-groups' },
+      { label: 'Тренажерний зал', href: '/#schedule-gym' },
+      { label: 'Фітнес-групи', href: '/#schedule-groups' },
     ],
   },
   {
@@ -28,7 +28,7 @@ const links = [
       { label: 'Масаж', href: '/abonementy#massage' },
     ],
   },
-  { label: 'Контакти', href: '#footer' },
+  { label: 'Контакти', href: '/#footer' },
 ] as const;
 
 export default function Navbar({ dark, onToggleTheme }: Props) {
@@ -59,7 +59,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
         style={{ padding: '0 clamp(16px, 5vw, 80px)' }}
       >
         {/* Logo */}
-        <a href="#" aria-label="Фітнес Клуб Forever — головна" className="mr-8 flex-shrink-0">
+        <a href="/" aria-label="Фітнес Клуб Forever — головна" className="mr-8 flex-shrink-0">
           <img
             src="/logo-ff-final.png"
             alt="Фітнес Клуб Forever — Львів, вул. Зелена 20"
