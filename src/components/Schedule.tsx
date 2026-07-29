@@ -50,14 +50,25 @@ export default function Schedule() {
   const handleClassSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus('sending');
-    const body = new URLSearchParams(new FormData(e.currentTarget) as unknown as Record<string, string>).toString();
+    const fd = new FormData(e.currentTarget);
     try {
-      const res = await fetch('/', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          subject: 'Нова заявка з сайту — Запис на заняття',
+          from_name: 'Forever Fitness сайт',
+          name: fd.get('name'),
+          phone: fd.get('phone'),
+          class: fd.get('class'),
+          day: fd.get('date'),
+          source: 'Заняття',
+          botcheck: '',
+        }),
       });
-      if (!res.ok) throw new Error(String(res.status));
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message || 'submit failed');
       setFormStatus('success');
       (e.target as HTMLFormElement).reset();
     } catch (err) {
@@ -225,9 +236,7 @@ export default function Schedule() {
               </p>
             ) : (
               <form onSubmit={handleClassSubmit} className="space-y-4">
-                <input type="hidden" name="form-name" value="class-booking" />
-                <input type="hidden" name="source" value="Заняття" />
-                <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
 
                 <input type="text" name="name" required placeholder="Ваше ім'я"
                        className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:border-accent focus:outline-none font-body text-sm" />

@@ -17,14 +17,26 @@ export default function TrainerBookingModal({ trainer, onClose }: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setStatus('sending')
-    const body = new URLSearchParams(new FormData(e.currentTarget) as unknown as Record<string, string>).toString()
+    const fd = new FormData(e.currentTarget)
     try {
-      const res = await fetch('/', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          subject: 'Нова заявка з сайту — Запис до тренера',
+          from_name: 'Forever Fitness сайт',
+          name: `${fd.get('firstName')} ${fd.get('lastName')}`,
+          phone: fd.get('phone'),
+          trainer: trainer?.name ?? '',
+          day: fd.get('day'),
+          time: fd.get('time'),
+          source: `Тренер: ${trainer?.name}`,
+          botcheck: '',
+        }),
       })
-      if (!res.ok) throw new Error(String(res.status))
+      const json = await res.json()
+      if (!json.success) throw new Error(json.message || 'submit failed')
       setStatus('success')
     } catch (err) {
       setStatus('error')
@@ -64,10 +76,7 @@ export default function TrainerBookingModal({ trainer, onClose }: Props) {
               </p>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <input type="hidden" name="form-name" value="trainer-booking" />
-                <input type="hidden" name="trainer" value={trainer.name} />
-                <input type="hidden" name="source" value={`Тренер: ${trainer.name}`} />
-                <input type="text" name="bot-field" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
 
                 <div className="grid grid-cols-2 gap-3">
                   <input type="text" name="firstName" required placeholder="Ім'я"
