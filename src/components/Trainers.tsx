@@ -103,7 +103,7 @@ export default function Trainers() {
   const [bioTrainer, setBioTrainer] = useState<Trainer | null>(null);
 
   return (
-    <section id="trainers" className="py-20 bg-white dark:bg-zinc-950">
+    <section id="trainers" className="py-20 bg-white dark:bg-zinc-950 scroll-mt-[68px]">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Header */}
         <div className="mb-10">

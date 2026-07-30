@@ -80,8 +80,10 @@ input[type="date"]::-webkit-date-and-time-value {
   text-align: left;
 }
 
-/* Prevent horizontal overflow on mobile */
+/* Prevent horizontal overflow on mobile.
+   overflow-x: clip (not hidden) — clip does not create a scroll container,
+   so position:sticky children continue to work relative to the viewport. */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
 }

@@ -39,7 +39,7 @@ const item: Variants = {
 
 export default function TrainingTypes() {
   return (
-    <section id="programs" className="py-20 bg-white dark:bg-zinc-950">
+    <section id="programs" className="py-20 bg-white dark:bg-zinc-950 scroll-mt-[68px]">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <h2
           className="font-display text-center text-zinc-900 dark:text-white mb-2"

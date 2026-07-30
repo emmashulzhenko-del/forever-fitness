@@ -2,7 +2,7 @@ import { MessageCircle, Phone } from 'lucide-react'
 
 export default function HelpChatCTA() {
   return (
-    <section id="help-chat" className="py-16 px-[clamp(20px,6vw,96px)] bg-accent">
+    <section id="help-chat" className="py-16 px-[clamp(20px,6vw,96px)] bg-accent scroll-mt-[68px]">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="font-display text-[clamp(28px,4.5vw,48px)] text-white leading-tight mb-3">
           РОЗМІРКОВУЄШ, ЯКЕ ТРЕНУВАННЯ ОБРАТИ?

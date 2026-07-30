@@ -101,7 +101,7 @@ const POPULAR: TeaserCard[] = [
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function MembershipTeaser() {
   return (
-    <section id="membership" className="py-20 bg-zinc-50 dark:bg-zinc-900">
+    <section id="membership" className="py-20 bg-zinc-50 dark:bg-zinc-900 scroll-mt-[68px]">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

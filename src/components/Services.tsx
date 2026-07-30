@@ -46,7 +46,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-20 px-[clamp(20px,6vw,96px)] bg-white dark:bg-zinc-950">
+    <section id="services" className="py-20 px-[clamp(20px,6vw,96px)] bg-white dark:bg-zinc-950 scroll-mt-[68px]">
       <h2 className="font-display font-bold text-[clamp(36px,5.5vw,64px)] text-center text-zinc-900 dark:text-white mb-3">
         ОБЕРИ ПОСЛУГУ
       </h2>

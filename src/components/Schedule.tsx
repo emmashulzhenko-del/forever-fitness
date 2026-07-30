@@ -238,7 +238,7 @@ export default function Schedule() {
             </>
           )}
 
-          <div id="class-booking-form" className="mt-12 max-w-2xl mx-auto p-8 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">
+          <div id="class-booking-form" className="mt-12 max-w-2xl mx-auto p-8 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 scroll-mt-[68px]">
             <h3 className="font-display text-2xl text-zinc-900 dark:text-white mb-1">ЗАПИСАТИСЬ НА ЗАНЯТТЯ</h3>
             <p className="font-body text-sm text-zinc-500 mb-6">Заповніть форму — ми підтвердимо запис за 10–15 хвилин</p>
 
