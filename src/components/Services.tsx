@@ -8,8 +8,8 @@ const services = [
     photo: '/services/gym.webp',
     photoAlt: 'Тренажерний зал Forever — автентичний лофт',
     links: [
-      { label: 'Абонементи', href: '#membership' },
-      { label: 'Розклад', href: '#schedule' },
+      { label: 'Абонементи', href: '/abonementy#gym' },
+      { label: 'Розклад', href: '#schedule-gym' },
     ],
   },
   {
@@ -18,8 +18,8 @@ const services = [
     photo: '/services/fitness.webp',
     photoAlt: 'Групові фітнес-заняття Forever',
     links: [
-      { label: 'Абонементи', href: '#membership' },
-      { label: 'Розклад', href: '#schedule' },
+      { label: 'Абонементи', href: '/abonementy#fp' },
+      { label: 'Розклад', href: '#schedule-fitness' },
     ],
   },
   {
@@ -28,7 +28,7 @@ const services = [
     photo: '/services/personal.webp',
     photoAlt: 'Персональні тренування з тренером Forever',
     links: [
-      { label: 'Абонементи', href: '#membership' },
+      { label: 'Абонементи', href: '/abonementy#personal' },
       { label: 'Тренери', href: '#trainers' },
     ],
   },
@@ -38,7 +38,7 @@ const services = [
     photo: '/services/massage.webp',
     photoAlt: 'Масаж і кінезіотерапія у Forever',
     links: [
-      { label: 'Ціни', href: '#massage' },
+      { label: 'Абонементи', href: '/abonementy#massage' },
       { label: 'Записатись на масаж', href: 'tel:+380737781008' },
     ],
   },

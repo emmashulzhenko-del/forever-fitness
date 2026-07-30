@@ -25,7 +25,7 @@ type GymCard = {
   icon: typeof Clock;
   title: string;
   desc: string;
-  links?: { label: string; href: string; isSchedule?: boolean }[];
+  links?: { label: string; href: string }[];
 };
 
 const gymCards: GymCard[] = [
@@ -40,7 +40,6 @@ const gymCards: GymCard[] = [
     links: [
       { label: 'Написати в чат', href: '#help-chat' },
       { label: 'Заповнити форму', href: '#class-booking-form' },
-      { label: 'Розклад фітнес-груп', href: '#schedule-groups', isSchedule: true },
     ] },
 ];
 
@@ -135,7 +134,7 @@ export default function Schedule() {
                 </button>
               ))}
             </div>
-            <a href="#membership"
+            <a href={tab === 'fitness' ? '/abonementy#fp' : '/abonementy#gym'}
                className="font-display font-semibold text-sm text-accent hover:underline inline-flex items-center gap-1 whitespace-nowrap">
               ПЕРЕГЛЯНУТИ АБОНЕМЕНТИ →
             </a>
@@ -203,35 +202,40 @@ export default function Schedule() {
           )}
 
           {tab === 'gym' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {gymCards.map(card => {
-                const Icon = card.icon;
-                return (
-                  <div key={card.title} className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 p-8">
-                    <Icon size={32} className="text-accent" />
-                    <p className="font-display text-xl text-zinc-900 dark:text-white mt-4 mb-2">{card.title}</p>
-                    <p className="font-body font-light text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{card.desc}</p>
-                    {card.links && (
-                      <div className="flex flex-col gap-2 mt-4">
-                        {card.links.map(l => (
-                          l.isSchedule ? (
-                            <a key={l.label} href={l.href}
-                               className="font-display font-semibold text-sm border border-accent text-accent px-3 py-2 text-center hover:bg-accent hover:text-white transition-colors">
-                              {l.label} →
-                            </a>
-                          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {gymCards.map(card => {
+                  const Icon = card.icon;
+                  return (
+                    <div key={card.title} className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 p-8">
+                      <Icon size={32} className="text-accent" />
+                      <p className="font-display text-xl text-zinc-900 dark:text-white mt-4 mb-2">{card.title}</p>
+                      <p className="font-body font-light text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{card.desc}</p>
+                      {card.links && (
+                        <div className="flex flex-col gap-2 mt-4">
+                          {card.links.map(l => (
                             <a key={l.label} href={l.href}
                                className="font-display font-semibold text-sm text-accent underline underline-offset-4 hover:no-underline">
                               {l.label} →
                             </a>
-                          )
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Standalone reminder — section level, outside the cards */}
+              <div className="mt-6">
+                <a
+                  href="#schedule-fitness"
+                  onClick={() => switchTab('fitness')}
+                  className="inline-flex items-center gap-2 font-display font-semibold text-sm border border-accent text-accent px-5 py-2.5 hover:bg-accent hover:text-white transition-colors"
+                >
+                  Переглянути розклад фітнес-груп →
+                </a>
+              </div>
+            </>
           )}
 
           <div id="class-booking-form" className="mt-12 max-w-2xl mx-auto p-8 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700">

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MobileSticky from '../components/MobileSticky';
@@ -56,11 +56,6 @@ const CLASS_OPTIONS = [
   'Масаж',
 ] as const;
 
-const WHY_POINTS = [
-  { icon: '⚡', title: 'Підбір тренування під вас', desc: 'Тренер з\'ясовує рівень і цілі перед першим заняттям — щоб старт був правильним.' },
-  { icon: '🎯', title: 'Будь-який напрямок', desc: 'Тренажерний зал, фітнес-групи, персональний тренер або масаж — знижка на перший візит.' },
-  { icon: '✅', title: 'Без зобов\'язань', desc: 'Ніякого тиску. Просто спробуй — і сам вирішиш, чи підходить клуб.' },
-];
 
 export default function PershaTrenuvannia() {
   const { dark, toggle } = useTheme();
@@ -316,35 +311,6 @@ export default function PershaTrenuvannia() {
               </form>
             )}
           </motion.div>
-        </div>
-      </section>
-
-      {/* ── WHY FOREVER ─────────────────────────────────────────────────────── */}
-      <section className="py-12 md:py-16 px-4 bg-white dark:bg-zinc-950">
-        <div className="max-w-3xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {WHY_POINTS.map(pt => (
-              <div key={pt.title} className="border border-zinc-100 dark:border-zinc-800 p-6">
-                <div className="text-2xl mb-3">{pt.icon}</div>
-                <p className="font-display text-sm text-zinc-900 dark:text-white mb-2">{pt.title}</p>
-                <p className="font-body text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{pt.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Contact strip */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-center">
-            <a
-              href="tel:+380737781008"
-              className="inline-flex items-center gap-2 font-display text-sm border border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400 px-6 py-3 hover:border-accent hover:text-accent transition-colors"
-            >
-              <Phone size={14} />
-              +38 (073) 778 10 08
-            </a>
-            <span className="font-body text-xs text-zinc-400 dark:text-zinc-600">
-              вул. Зелена 20, Львів · Пн–Сб 8:00–21:00
-            </span>
-          </div>
         </div>
       </section>
 
