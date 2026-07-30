@@ -25,7 +25,7 @@ type GymCard = {
   icon: typeof Clock;
   title: string;
   desc: string;
-  links?: { label: string; href: string }[];
+  links?: { label: string; href: string; isSchedule?: boolean }[];
 };
 
 const gymCards: GymCard[] = [
@@ -40,6 +40,7 @@ const gymCards: GymCard[] = [
     links: [
       { label: 'Написати в чат', href: '#help-chat' },
       { label: 'Заповнити форму', href: '#class-booking-form' },
+      { label: 'Розклад фітнес-груп', href: '#schedule-groups', isSchedule: true },
     ] },
 ];
 
@@ -80,7 +81,7 @@ export default function Schedule() {
   useEffect(() => {
     const applyHash = () => {
       const hash = window.location.hash
-      if (hash === '#schedule-groups') {
+      if (hash === '#schedule-groups' || hash === '#schedule-fitness') {
         setTab('fitness')
         document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' })
       } else if (hash === '#schedule-gym') {
@@ -99,7 +100,7 @@ export default function Schedule() {
   }
 
   return (
-    <section id="schedule" className="py-20 bg-zinc-50 dark:bg-zinc-900">
+    <section id="schedule" className="py-20 bg-zinc-50 dark:bg-zinc-900 scroll-mt-[68px]">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -213,10 +214,17 @@ export default function Schedule() {
                     {card.links && (
                       <div className="flex flex-col gap-2 mt-4">
                         {card.links.map(l => (
-                          <a key={l.label} href={l.href}
-                             className="font-display font-semibold text-sm text-accent underline underline-offset-4 hover:no-underline">
-                            {l.label} →
-                          </a>
+                          l.isSchedule ? (
+                            <a key={l.label} href={l.href}
+                               className="font-display font-semibold text-sm border border-accent text-accent px-3 py-2 text-center hover:bg-accent hover:text-white transition-colors">
+                              {l.label} →
+                            </a>
+                          ) : (
+                            <a key={l.label} href={l.href}
+                               className="font-display font-semibold text-sm text-accent underline underline-offset-4 hover:no-underline">
+                              {l.label} →
+                            </a>
+                          )
                         ))}
                       </div>
                     )}

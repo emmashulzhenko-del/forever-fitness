@@ -45,7 +45,7 @@ const POPULAR: TeaserCard[] = [
       'HIIT, Йога, Джампінг, Табата',
     ],
     url: fp.url ?? null,
-    href: null,
+    href: '/abonementy#fp',
     recommended: true,
   },
   {
@@ -61,7 +61,7 @@ const POPULAR: TeaserCard[] = [
       'Час роботи: 08:00–21:00',
     ],
     url: gym.url ?? null,
-    href: null,
+    href: '/abonementy#gym',
     recommended: false,
   },
   {
@@ -77,7 +77,7 @@ const POPULAR: TeaserCard[] = [
       'Тренажерний зал',
     ],
     url: pt.url ?? null,
-    href: null,
+    href: '/abonementy#personal',
     recommended: false,
   },
   {
@@ -93,7 +93,7 @@ const POPULAR: TeaserCard[] = [
       'Без зобов\u2019язань',
     ],
     url: null,
-    href: '#class-booking-form',
+    href: '/persha-trenuvannia',
     recommended: false,
   },
 ];
@@ -173,7 +173,7 @@ export default function MembershipTeaser() {
                 </ul>
 
                 {/* CTA — pinned to bottom, identical padding for all cards */}
-                <div className="mt-auto">
+                <div className="mt-auto flex flex-col gap-2">
                   {card.url ? (
                     <a
                       href={card.url}
@@ -185,10 +185,18 @@ export default function MembershipTeaser() {
                     </a>
                   ) : (
                     <a
-                      href={card.href ?? '#class-booking-form'}
+                      href={card.href ?? '/persha-trenuvannia'}
                       className="block font-display text-sm border border-accent text-accent text-center py-3 hover:bg-accent hover:text-white transition-colors"
                     >
                       Записатись
+                    </a>
+                  )}
+                  {card.href && card.url && (
+                    <a
+                      href={card.href}
+                      className="block font-display text-xs text-zinc-400 dark:text-zinc-500 text-center py-1.5 hover:text-accent transition-colors"
+                    >
+                      Абонементи →
                     </a>
                   )}
                 </div>

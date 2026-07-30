@@ -19,7 +19,7 @@ export default function FitnessGroups() {
   const [active, setActive] = useState<Group | null>(null)
 
   return (
-    <section id="fitness-groups" className="py-20 px-[clamp(20px,6vw,96px)] bg-white dark:bg-zinc-950">
+    <section id="fitness-groups" className="py-20 px-[clamp(20px,6vw,96px)] bg-white dark:bg-zinc-950 scroll-mt-[68px]">
       <h2 className="font-display text-[clamp(32px,5vw,56px)] text-center text-zinc-900 dark:text-white mb-2">
         ФІТНЕС ГРУПИ
       </h2>
@@ -62,7 +62,7 @@ export default function FitnessGroups() {
                 </div>
                 <p className="font-body font-light text-sm text-white/75 leading-relaxed">{active.desc}</p>
                 <a
-                  href="#schedule"
+                  href="#schedule-groups"
                   onClick={() => setActive(null)}
                   className="mt-5 block w-full font-display font-semibold text-sm bg-accent text-white py-3 text-center hover:bg-pink-700 transition"
                 >

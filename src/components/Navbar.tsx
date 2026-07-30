@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
@@ -34,6 +34,13 @@ const links = [
 export default function Navbar({ dark, onToggleTheme }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 8);
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
 
   function openMenu() {
     setExpandedItem(null); // always start collapsed
@@ -55,7 +62,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
         initial={{ y: -64, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="sticky top-0 z-50 h-[68px] flex items-center bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800"
+        className={`sticky top-0 z-50 h-[68px] flex items-center bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 transition-shadow duration-200 ${scrolled ? 'shadow-md' : ''}`}
         style={{ padding: '0 clamp(16px, 5vw, 80px)' }}
       >
         {/* Logo */}
@@ -116,7 +123,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
         <div className="flex items-center gap-2 ml-auto md:ml-0">
           <ThemeToggle dark={dark} onToggle={onToggleTheme} />
           <a
-            href="/abonementy"
+            href="/persha-trenuvannia"
             className="hidden lg:inline-flex items-center font-display text-base bg-accent text-white px-5 py-2.5 hover:bg-pink-700 transition-colors duration-200"
           >
             Перше тренування −50%
@@ -208,7 +215,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
             })}
 
             <a
-              href="/abonementy"
+              href="/persha-trenuvannia"
               onClick={closeMenu}
               className="font-display text-lg bg-accent text-white px-8 py-4 hover:bg-pink-700 transition-colors mt-2"
             >

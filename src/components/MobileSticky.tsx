@@ -15,7 +15,7 @@ export default function MobileSticky() {
       {/* Fixed bottom bar — mobile only */}
       <div className="fixed bottom-0 left-0 right-0 md:hidden z-[100] bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 px-3 py-2.5 flex gap-2 items-center shadow-[0_-4px_24px_rgba(0,0,0,0.08)]">
         {/* Button 1 — 50% offer */}
-        <a href="/abonementy"
+        <a href="/persha-trenuvannia"
            className="flex-1 font-display font-semibold text-[12px] bg-accent text-white py-3 text-center whitespace-nowrap">
           −50% ПЕРШЕ
         </a>

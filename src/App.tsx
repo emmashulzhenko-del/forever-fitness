@@ -16,6 +16,7 @@ import CTABanner from './components/CTABanner';
 import Footer from './components/Footer';
 import MobileSticky from './components/MobileSticky';
 import Abonementy from './pages/Abonementy';
+import PershaTrenuvannia from './pages/PershaTrenuvannia';
 
 function HomePage() {
   const { dark, toggle } = useTheme();
@@ -47,6 +48,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/abonementy" element={<Abonementy />} />
+      <Route path="/persha-trenuvannia" element={<PershaTrenuvannia />} />
     </Routes>
   );
 }

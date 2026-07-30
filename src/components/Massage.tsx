@@ -49,12 +49,20 @@ export default function Massage() {
               ))}
             </div>
 
-            <a
-              href="tel:+380737781008"
-              className="inline-block bg-accent text-white font-display text-base px-8 py-4 mt-8 hover:bg-pink-700 transition-colors duration-200"
-            >
-              ЗАПИСАТИСЬ НА МАСАЖ
-            </a>
+            <div className="flex flex-wrap gap-3 mt-8">
+              <a
+                href="tel:+380737781008"
+                className="inline-block bg-accent text-white font-display text-base px-8 py-4 hover:bg-pink-700 transition-colors duration-200"
+              >
+                ЗАПИСАТИСЬ НА МАСАЖ
+              </a>
+              <a
+                href="/abonementy#massage"
+                className="inline-flex items-center font-display text-sm border border-zinc-300 dark:border-zinc-600 text-zinc-500 dark:text-zinc-400 px-6 py-4 hover:border-accent hover:text-accent transition-colors duration-200"
+              >
+                Абонементи масажу →
+              </a>
+            </div>
           </motion.div>
 
           {/* Right — image placeholder */}

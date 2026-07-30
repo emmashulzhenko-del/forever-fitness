@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { payments, fmtPrice, type PaymentEntry } from '../data/payments';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MobileSticky from '../components/MobileSticky';
+import ScrollDots from '../components/ScrollDots';
 import { useTheme } from '../hooks/useTheme';
 
 // ─── Savings helper ───────────────────────────────────────────────────────────
@@ -582,6 +583,7 @@ export default function Abonementy() {
   const [activeTab, setActiveTab] = useState<TabKey>(() =>
     hashToTab(typeof window !== 'undefined' ? window.location.hash : ''),
   );
+  const pricingRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const h = () => setActiveTab(hashToTab(window.location.hash));
@@ -641,7 +643,9 @@ export default function Abonementy() {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 md:px-8 pb-24 md:pb-16">
+      <ScrollDots activeTab={activeTab} onSwitch={switchTab} pricingRef={pricingRef} />
+
+      <main ref={pricingRef} className="max-w-7xl mx-auto px-4 md:px-8 pb-24 md:pb-16">
         {/* Animated panel */}
         <AnimatePresence mode="wait">
           <motion.div
