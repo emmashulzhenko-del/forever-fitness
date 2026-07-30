@@ -123,7 +123,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
         <div className="flex items-center gap-2 ml-auto md:ml-0">
           <ThemeToggle dark={dark} onToggle={onToggleTheme} />
           <a
-            href="/persha-trenuvannia"
+            href="/pershe-trenuvannia"
             className="hidden lg:inline-flex items-center font-display text-base bg-accent text-white px-5 py-2.5 hover:bg-pink-700 transition-colors duration-200"
           >
             Перше тренування −50%
@@ -215,7 +215,7 @@ export default function Navbar({ dark, onToggleTheme }: Props) {
             })}
 
             <a
-              href="/persha-trenuvannia"
+              href="/pershe-trenuvannia"
               onClick={closeMenu}
               className="font-display text-lg bg-accent text-white px-8 py-4 hover:bg-pink-700 transition-colors mt-2"
             >

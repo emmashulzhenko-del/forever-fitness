@@ -48,7 +48,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/abonementy" element={<Abonementy />} />
-      <Route path="/persha-trenuvannia" element={<PershaTrenuvannia />} />
+      <Route path="/pershe-trenuvannia" element={<PershaTrenuvannia />} />
     </Routes>
   );
 }

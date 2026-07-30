@@ -93,7 +93,7 @@ const POPULAR: TeaserCard[] = [
       'Без зобов\u2019язань',
     ],
     url: null,
-    href: '/persha-trenuvannia',
+    href: '/pershe-trenuvannia',
     recommended: false,
   },
 ];
@@ -185,7 +185,7 @@ export default function MembershipTeaser() {
                     </a>
                   ) : (
                     <a
-                      href={card.href ?? '/persha-trenuvannia'}
+                      href={card.href ?? '/pershe-trenuvannia'}
                       className="block font-display text-sm border border-accent text-accent text-center py-3 hover:bg-accent hover:text-white transition-colors"
                     >
                       Записатись

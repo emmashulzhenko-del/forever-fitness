@@ -21,7 +21,6 @@ const CLASS_BASE_PRICES: Record<string, number | null> = {
   'Черговий тренер':                  400,  // same rate as personal
   'Самостійно в тренажерному залі':   300,  // gym-razove-full rate
   'Кінезіотерапія':                   null, // not in payments.ts
-  'Масаж':                            null, // complex range (900–1450)
 };
 
 /**
@@ -53,7 +52,6 @@ const CLASS_OPTIONS = [
   'Стретчинг',
   'FitMama',
   'Кінезіотерапія',
-  'Масаж',
 ] as const;
 
 

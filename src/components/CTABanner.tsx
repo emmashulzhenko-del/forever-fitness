@@ -27,7 +27,7 @@ export default function CTABanner() {
         </p>
         <div className="flex justify-center gap-4 mt-10 flex-wrap">
           <a
-            href="/persha-trenuvannia"
+            href="/pershe-trenuvannia"
             className="bg-white text-accent font-display text-xl px-12 py-5 hover:bg-zinc-100 hover:scale-[1.02] transition-all duration-200"
           >
             ЗАПИСАТИСЬ ЗАРАЗ
